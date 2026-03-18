@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<!-- Dynamic meta tags updated by JS on page switch -->
+<title id="page-title">Free Online Calculators — Calc Toolkit</title>
+<meta name="description" id="page-desc" content="Free online calculators for age, percentage, BMI, finance, unit conversion, and more. Fast, accurate, no sign-up required."/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" id="page-canonical" href="https://calculatortoolkit.com/"/>
+<meta property="og:title" id="og-title" content="Free Online Calculators — Calc Toolkit"/>
+<meta property="og:description" id="og-desc" content="Free online calculators. Fast, accurate, no sign-up."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" id="og-url" content="https://calculatortoolkit.com/"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" id="tw-title" content="Free Online Calculators — Calc Toolkit"/>
+<meta name="twitter:description" id="tw-desc" content="Free online calculators. Fast, accurate, no sign-up."/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧮%3C/text%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<script type="application/ld+json" id="page-schema">{}</script>
+<style>
+/* ═══ TOKENS ═══════════════════════════════════════════════════════ */
+[data-theme="dark"]{--bg:#0C0E0F;--surface:#161A1C;--surface2:#1D2224;--border:#252C2F;--border2:#2F393D;--text:#E8EDF0;--text-soft:#8FA5AE;--text-mute:#445861;--accent:#4ECDC4;--accent2:#FFE66D;--shadow:0 8px 40px rgba(0,0,0,.5)}
+[data-theme="light"]{--bg:#F2F4F5;--surface:#FFFFFF;--surface2:#EEF1F3;--border:#D8E0E4;--border2:#C0CDD3;--text:#0C1A1F;--text-soft:#3A5A66;--text-mute:#3D5C68;--accent:#00857A;--accent2:#CC9C00;--shadow:0 8px 40px rgba(0,0,0,.08)}
+:root{
+  --cat-age:#A78BFA;--cat-pct:#FB923C;--cat-health:#FF6B6B;
+  --cat-finance:#4ECDC4;--cat-time:#60A5FA;--cat-unit:#34D399;--cat-util:#F59E0B;
+  --radius:16px;--radius-sm:10px;
+  --ff-display:'Instrument Serif',Georgia,serif;
+  --ff-body:'Syne',sans-serif;
+  --ff-mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1)
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;font-size:15px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ═══ LAYOUT ══════════════════════════════════════════════════════ */
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+.header-inner{display:flex;align-items:center;padding:0 2rem;height:58px;gap:1rem}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;flex-shrink:0}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:1rem;box-shadow:0 2px 10px color-mix(in srgb,var(--accent) 35%,transparent)}
+.logo-text{font-family:var(--ff-display);font-size:1.1rem;font-style:italic;color:var(--text)}
+.header-sep{width:1px;height:22px;background:var(--border);flex-shrink:0}
+.breadcrumb{display:flex;align-items:center;gap:.3rem;flex:1;min-width:0;overflow:hidden}
+.bc-home{font-family:var(--ff-mono);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-mute);background:none;border:none;cursor:pointer;transition:color .15s;flex-shrink:0;padding:.1rem 0}
+.bc-home:hover{color:var(--accent)}
+.bc-sep{color:var(--border2);font-size:.85rem;user-select:none;flex-shrink:0}
+.bc-cat{font-family:var(--ff-mono);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;cursor:pointer;background:none;border:none;padding:.1rem 0;transition:opacity .15s;flex-shrink:0}
+.bc-cat:hover{opacity:.7}
+.bc-page{font-family:var(--ff-display);font-size:.95rem;font-style:italic;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0;margin-left:auto}
+.badge{font-family:var(--ff-mono);font-size:.6rem;color:var(--text-mute);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.25rem .6rem;white-space:nowrap}
+.theme-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border2);background:var(--surface2);color:var(--text-soft);cursor:pointer;font-size:.9rem;display:grid;place-items:center;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.menu-btn{display:none;width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border2);background:var(--surface2);color:var(--text);font-size:1rem;cursor:pointer;place-items:center}
+
+/* ═══ MAIN LAYOUT ══════════════════════════════════════════════════ */
+.app{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 58px)}
+
+/* ═══ SIDEBAR ═══════════════════════════════════════════════════════ */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);position:sticky;top:58px;height:calc(100vh - 58px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;display:flex;flex-direction:column}
+.sb-search{padding:.75rem 1rem;border-bottom:1px solid var(--border)}
+.sb-search-wrap{display:flex;align-items:center;gap:.4rem;background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;padding:.4rem .7rem;transition:border-color .2s}
+.sb-search-wrap:focus-within{border-color:var(--accent)}
+.sb-search-wrap input{background:none;border:none;outline:none;font-family:var(--ff-body);font-size:.78rem;color:var(--text);width:100%}
+.sb-search-wrap input::placeholder{color:var(--text-mute)}
+.sb-nav{flex:1;padding:.5rem 0 1.5rem}
+.sb-cat-header{display:flex;align-items:center;gap:.5rem;padding:.45rem 1rem .3rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);cursor:pointer;user-select:none;border-radius:6px;margin:0 .4rem;transition:background .15s}
+.sb-cat-header:hover{background:var(--surface2)}
+.sb-cat-dot{width:6px;height:6px;border-radius:50%;background:var(--cat-color,var(--accent));flex-shrink:0}
+.sb-cat-count{margin-left:auto;font-size:.58rem;background:color-mix(in srgb,var(--cat-color,var(--accent)) 12%,transparent);color:var(--cat-color,var(--accent));padding:1px 6px;border-radius:20px;font-weight:700}
+.sb-cat-arrow{display:flex;align-items:center;justify-content:center;width:14px;height:14px;flex-shrink:0;transition:transform .22s var(--ease);color:var(--text-mute)}
+.sb-cat-arrow svg{width:9px;height:9px;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.sb-group.collapsed .sb-cat-arrow{transform:rotate(-90deg)}
+.sb-tools{overflow:hidden;transition:max-height .28s var(--ease),opacity .22s ease;max-height:800px;opacity:1}
+.sb-group.collapsed .sb-tools{max-height:0;opacity:0}
+.sb-btn{display:flex;align-items:center;gap:.6rem;width:100%;padding:.48rem 1rem .48rem 1.4rem;background:none;border:none;font-family:var(--ff-body);font-size:.78rem;font-weight:500;color:var(--text-soft);cursor:pointer;text-align:left;transition:all .15s var(--ease);border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-btn:hover{background:var(--surface2);color:var(--text)}
+.sb-btn.active{background:color-mix(in srgb,var(--nav-c,var(--accent)) 10%,transparent);color:var(--nav-c,var(--accent));border-left-color:var(--nav-c,var(--accent))}
+.sb-icon{width:26px;height:26px;border-radius:6px;background:color-mix(in srgb,var(--nav-c,var(--accent)) 15%,var(--surface2));display:grid;place-items:center;font-size:.8rem;flex-shrink:0;transition:transform .15s}
+.sb-btn:hover .sb-icon,.sb-btn.active .sb-icon{transform:scale(1.1)}
+
+/* ═══ MAIN CONTENT ══════════════════════════════════════════════════ */
+.main{min-width:0;display:flex;flex-direction:column}
+.content{flex:1;padding:2rem 2.5rem}
+.page{display:none}
+.page.active{display:block;animation:fadeSlide .22s var(--ease) both}
+
+/* ═══ HOME PAGE ═════════════════════════════════════════════════════ */
+.home-hero{margin-bottom:2rem}
+.home-hero h1{font-family:var(--ff-display);font-size:2rem;font-style:italic;line-height:1.2;margin-bottom:.6rem}
+.home-hero p{font-size:.88rem;color:var(--text-soft);line-height:1.75;max-width:580px}
+.home-cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.cat-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-top:3px solid var(--cc,var(--accent));padding:1.2rem;cursor:default}
+.cat-block-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cc,var(--accent));margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.cat-block-links{display:flex;flex-direction:column;gap:.2rem}
+.cat-link{font-size:.82rem;color:var(--text-soft);background:none;border:none;cursor:pointer;text-align:left;padding:.28rem .3rem;border-radius:6px;transition:all .15s;font-family:var(--ff-body)}
+.cat-link:hover{color:var(--cc,var(--accent));background:color-mix(in srgb,var(--cc,var(--accent)) 6%,var(--bg))}
+
+/* ═══ CALCULATOR PAGE ════════════════════════════════════════════════ */
+.calc-page{max-width:820px}
+.calc-hero{margin-bottom:1.5rem}
+.calc-hero h1{font-family:var(--ff-display);font-size:1.6rem;font-style:italic;line-height:1.2;margin-bottom:.5rem}
+.calc-hero .desc{font-size:.85rem;color:var(--text-soft);line-height:1.75;max-width:620px}
+.calc-hero .meta-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.75rem}
+.meta-tag{font-family:var(--ff-mono);font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:5px;background:color-mix(in srgb,var(--pc,var(--accent)) 10%,var(--surface2));color:var(--pc,var(--accent));border:1px solid color-mix(in srgb,var(--pc,var(--accent)) 20%,transparent)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.card-stripe{height:3px;background:var(--pc,var(--accent))}
+.card-head{padding:1.25rem 1.5rem 1rem;display:flex;align-items:flex-start;gap:.9rem;border-bottom:1px solid var(--border)}
+.card-icon{width:42px;height:42px;border-radius:10px;background:color-mix(in srgb,var(--pc,var(--accent)) 15%,var(--surface2));border:1px solid color-mix(in srgb,var(--pc,var(--accent)) 25%,transparent);display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
+.card-info h2{font-family:var(--ff-display);font-size:1.05rem;font-style:italic;color:var(--text)}
+.card-info p{font-size:.72rem;color:var(--text-soft);margin-top:.18rem;line-height:1.5}
+.card-body{padding:1.25rem 1.5rem 1.5rem;display:flex;flex-direction:column;gap:1rem}
+
+/* FORM */
+.field{display:flex;flex-direction:column;gap:.32rem}
+.field label,.field .lbl{font-family:var(--ff-mono);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute)}
+.field input,.field select,.field textarea{font-family:var(--ff-body);font-size:.88rem;color:var(--text);background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--radius-sm);padding:.58rem .85rem;width:100%;outline:none;transition:border-color .18s,box-shadow .18s;appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--pc,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--pc,var(--accent)) 15%,transparent)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.field-row.trio{grid-template-columns:1fr 1fr 1fr}
+.hint{font-size:.7rem;color:var(--text-mute);font-style:italic}
+
+/* PILL TOGGLE */
+.pill-toggle{display:inline-flex;background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;padding:2px;gap:2px}
+.pill-btn{font-family:var(--ff-body);font-size:.73rem;font-weight:700;padding:.28rem .65rem;border:none;border-radius:6px;background:transparent;color:var(--text-mute);cursor:pointer;transition:all .15s var(--ease)}
+.pill-btn.active{background:var(--pc,var(--accent));color:color-mix(in srgb,var(--pc,var(--accent)) 5%,#000)}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:.45rem;flex-wrap:wrap}
+.btn-primary{flex:1;font-family:var(--ff-body);font-size:.83rem;font-weight:700;padding:.65rem 1rem;border:none;border-radius:var(--radius-sm);background:var(--pc,var(--accent));color:color-mix(in srgb,var(--pc,var(--accent)) 5%,#000);cursor:pointer;min-width:100px;transition:opacity .15s,transform .15s}
+.btn-primary:hover{opacity:.85;transform:translateY(-1px)}
+.btn-primary:active{transform:scale(.97)}
+.btn-secondary{font-family:var(--ff-body);font-size:.78rem;font-weight:600;padding:.65rem .9rem;border:1.5px solid var(--border2);border-radius:var(--radius-sm);background:transparent;color:var(--text-soft);cursor:pointer;transition:all .15s}
+.btn-secondary:hover{border-color:var(--text-soft);color:var(--text);background:var(--surface2)}
+.btn-icon{font-family:var(--ff-body);font-size:.75rem;font-weight:700;padding:.58rem .75rem;border:1.5px solid var(--border2);border-radius:var(--radius-sm);background:transparent;color:var(--text-soft);cursor:pointer;transition:all .15s}
+.btn-icon:hover{background:var(--pc,var(--accent));border-color:var(--pc,var(--accent));color:#000}
+
+/* RESULT */
+.result{border-radius:var(--radius-sm);font-size:.86rem;line-height:1.65;display:none}
+.result.show{display:block;animation:popIn .28s var(--ease) both}
+.result--ok{background:var(--surface);border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:1.1rem 1.3rem}
+.result--error{background:rgba(255,100,100,.08);border:1.5px solid rgba(255,100,100,.25);color:#ff8080;padding:1rem 1.2rem}
+.result-title{font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:.4rem;line-height:1.2}
+.result-copy{float:right;font-family:var(--ff-mono);font-size:.62rem;font-weight:700;padding:.22rem .55rem;border:1.5px solid var(--border2);border-radius:5px;background:transparent;color:var(--text-mute);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em}
+.result-copy:hover{border-color:var(--accent);color:var(--accent)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:.38rem;margin-top:.55rem}
+.stat-cell{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.5rem .45rem;text-align:center}
+.stat-n{font-family:var(--ff-mono);font-size:1.05rem;color:var(--pc,var(--accent));font-weight:700;line-height:1}
+.stat-l{font-family:var(--ff-mono);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-mute);margin-top:.18rem}
+
+/* ═══ SHARE BAR ══════════════════════════════════════════════════ */
+.share-bar{margin-top:1rem;max-width:820px}
+.share-bar-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;padding:.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.share-bar-left{display:flex;align-items:center;gap:.5rem}
+.share-bar-icon{font-size:1rem}
+.share-bar-text{font-family:var(--ff-mono);font-size:.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:.06em}
+.share-bar-btn{font-family:var(--ff-mono);font-size:.68rem;font-weight:700;padding:.35rem .85rem;border:1.5px solid var(--border2);border-radius:6px;background:transparent;color:var(--text-soft);cursor:pointer;transition:all .18s;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.share-bar-btn:hover{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+
+/* ═══ FAQ ════════════════════════════════════════════════════════ */
+.faq-section{margin-top:2rem;max-width:820px}
+.faq-title{font-family:var(--ff-display);font-size:1.2rem;font-style:italic;color:var(--text);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:.5rem;background:var(--surface)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:none;border:none;font-family:var(--ff-body);font-size:.84rem;font-weight:600;color:var(--text);cursor:pointer;text-align:left;gap:1rem;transition:background .15s}
+.faq-q:hover{background:var(--surface2)}
+.faq-q .faq-arrow{font-size:.7rem;color:var(--text-mute);transition:transform .22s var(--ease);flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .28s var(--ease),padding .2s;font-size:.83rem;color:var(--text-soft);line-height:1.75;padding:0 1rem}
+.faq-item.open .faq-a{max-height:300px;padding:.1rem 1rem .9rem}
+.faq-a strong{color:var(--text)}
+
+/* ═══ FOOTER ════════════════════════════════════════════════════ */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:1.5rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.footer-copy{font-family:var(--ff-mono);font-size:.62rem;color:var(--text-mute)}
+.footer-links-row{display:flex;gap:1rem;flex-wrap:wrap}
+.footer-link{font-family:var(--ff-mono);font-size:.62rem;color:var(--text-mute);background:none;border:none;cursor:pointer;transition:color .15s;padding:0;letter-spacing:.03em}
+.footer-link:hover{color:var(--accent)}
+.footer-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;box-shadow:0 0 6px var(--accent);animation:pulse 2s ease infinite;margin-left:.4rem;vertical-align:middle}
+
+/* ═══ RANGE INPUT ════════════════════════════════════════════════ */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;background:var(--border2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--pc,var(--accent));border:2px solid var(--bg);box-shadow:0 1px 6px rgba(0,0,0,.25);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+
+/* ═══ BMI BAR ════════════════════════════════════════════════════ */
+.bmi-bar{height:6px;border-radius:99px;background:linear-gradient(to right,#4A90D9,#3DA870 35%,#E0A03C 65%,#D9534F);position:relative;margin-top:.7rem}
+.bmi-pin{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--text);border:2px solid var(--bg);transform:translate(-50%,-50%);transition:left .5s var(--ease)}
+.bmi-scale{display:flex;justify-content:space-between;font-family:var(--ff-mono);font-size:.58rem;color:var(--text-mute);margin-top:.28rem}
+
+/* ═══ RESPONSIVE ═════════════════════════════════════════════════ */
+@media(max-width:768px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-270px;top:0;bottom:0;width:260px;height:100vh;z-index:200;transition:left .3s var(--ease);box-shadow:5px 0 30px rgba(0,0,0,.35)}
+  .sidebar.open{left:0}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199}
+  .overlay.show{display:block}
+  .menu-btn{display:grid}
+  .badge{display:none}
+  .header-sep{display:none}
+  .breadcrumb{display:none}
+  .content{padding:1.2rem 1rem}
+  .home-hero h1{font-size:1.5rem}
+  .home-cats-grid{grid-template-columns:1fr}
+  .field-row,.field-row.trio{grid-template-columns:1fr}
+  .btn-row{flex-direction:column}
+  .btn-primary,.btn-secondary,.btn-icon{width:100%}
+  .site-footer{padding:1rem}
+}
+@media(max-width:480px){.calc-hero h1{font-size:1.3rem}}
+
+/* ═══ KEYFRAMES ═════════════════════════════════════════════════ */
+@keyframes fadeSlide{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ═══ RELATED CALCULATORS ══════════════════════════════════════ */
+.related-section{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);max-width:820px}
+.related-title{font-family:var(--ff-display);font-size:1.1rem;font-style:italic;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.65rem}
+.related-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.85rem 1rem;cursor:pointer;transition:all .18s var(--ease);display:flex;align-items:center;gap:.7rem;text-align:left;width:100%;font-family:var(--ff-body);border-left:3px solid var(--rc,var(--accent));overflow:hidden;box-sizing:border-box}
+.related-card:hover{transform:translateY(-2px);box-shadow:0 4px 18px rgba(0,0,0,.1);border-color:var(--rc,var(--accent));background:color-mix(in srgb,var(--rc,var(--accent)) 4%,var(--surface))}
+.related-card-icon{width:34px;height:34px;border-radius:8px;background:color-mix(in srgb,var(--rc,var(--accent)) 14%,var(--surface2));display:grid;place-items:center;font-size:1rem;flex-shrink:0}
+.related-card-info{min-width:0;flex:1;overflow:hidden}
+.related-card-title{font-size:.8rem;font-weight:700;color:var(--text);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;max-width:100%}
+.related-card-cat{font-size:.65rem;color:var(--text-mute);font-family:var(--ff-mono);margin-top:.12rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+@media(max-width:480px){.related-grid{grid-template-columns:1fr 1fr}}
+
+/* Critical: hide all pages before JS runs */
+.page{display:none!important}
+.page.active{display:block!important}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <a class="logo" href="#" onclick="goTo('home');return false" aria-label="Calc Toolkit Home">
+      <div class="logo-mark" aria-hidden="true">🧮</div>
+      <span class="logo-text">Calc Toolkit</span>
+    </a>
+    <div class="header-sep" aria-hidden="true"></div>
+    <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
+      <button class="bc-home" onclick="goTo('home')">Home</button>
+      <span class="bc-sep" id="bc-s1" style="display:none" aria-hidden="true">›</span>
+      <button class="bc-cat" id="bc-cat" style="display:none"></button>
+      <span class="bc-sep" id="bc-s2" style="display:none" aria-hidden="true">›</span>
+      <span class="bc-page" id="bc-page" style="display:none"></span>
+    </nav>
+    <div class="header-actions">
+      <span class="badge">🔒 Free · No sign-up</span>
+      <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar" aria-label="Calculators">
+  <div class="sb-search">
+    <div class="sb-search-wrap">
+      <span style="color:var(--text-mute);font-size:.8rem" aria-hidden="true">🔍</span>
+      <input type="text" placeholder="Search calculators…" aria-label="Search" id="sb-search" oninput="searchCalcs(this.value)" autocomplete="off"/>
+    </div>
+  </div>
+  <nav class="sb-nav" id="sb-nav" aria-label="Calculator categories"></nav>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+<div class="content" id="content">
+
+  <!-- HOME PAGE -->
+  <div class="page" id="page-home">
+    <div class="home-hero">
+      <h1>Free Online Calculators</h1>
+      <p>Fast, accurate calculators for age, percentage, BMI, finance, unit conversion, and more. No sign-up required — all tools work instantly in your browser.</p>
+    </div>
+    <div class="home-cats-grid" id="home-grid"></div>
+  </div>
+
+  <!-- CALCULATOR PAGES — built dynamically by JS -->
+  <div id="calc-pages"></div>
+
+</div><!-- /content -->
+
+<!-- FOOTER WITH UPDATED ABOUT SECTION -->
+<footer class="site-footer">
+  <div style="width:100%;padding-bottom:1rem;border-bottom:1px solid var(--border);margin-bottom:1rem;display:flex;justify-content:center">
+    <div style="max-width:820px;text-align:center">
+      <h3 style="font-family:var(--ff-display);font-size:.95rem;font-style:italic;color:var(--text);margin-bottom:.5rem">🧮 About Calc Toolkit</h3>
+      <p style="font-size:.78rem;color:var(--text-soft);line-height:1.6;margin-bottom:.4rem">Calc Toolkit is your fast and simple solution for everyday calculations. From finance and health to math and time, our tools are designed to give accurate results instantly.</p>
+      <p style="font-size:.78rem;color:var(--text-soft);line-height:1.6;margin-bottom:.4rem">All calculators are free to use, with no sign-up required. We focus on speed, simplicity, and reliability so you can get answers without hassle. We are also continuously developing more tools to expand our collection.</p>
+      <p style="font-size:.78rem;color:var(--text-soft);line-height:1.6">We're always improving, and your feedback helps us make Calc Toolkit even better. Our goal is to become your go-to place for quick and easy calculations.</p>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;width:100%">
+    <span class="footer-copy">© 2026 Calc Toolkit · Free to use · All rights reserved</span>
+    <div class="footer-links-row">
+      <button class="footer-link" onclick="goTo('home')">Home</button>
+      <span style="color:var(--border2);font-size:.6rem">·</span>
+      <button class="footer-link" onclick="openLegal('about')">About</button>
+      <span style="color:var(--border2);font-size:.6rem">·</span>
+      <button class="footer-link" onclick="openLegal('privacy')">Privacy</button>
+      <span style="color:var(--border2);font-size:.6rem">·</span>
+      <button class="footer-link" onclick="openLegal('terms')">Terms</button>
+      <span class="footer-dot"></span>
+    </div>
+  </div>
+</footer>
+</div><!-- /main -->
+</div><!-- /app -->
+
+
+<!-- LEGAL MODAL -->
+<div id="legal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:1rem" onclick="e=>{if(e.target===this)closeLegal()}" role="dialog" aria-modal="true">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);max-width:600px;width:100%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border)">
+      <span id="legal-title" style="font-family:var(--ff-display);font-size:1.2rem;font-style:italic;color:var(--text)"></span>
+      <button onclick="closeLegal()" style="width:30px;height:30px;border-radius:7px;border:1.5px solid var(--border2);background:var(--surface2);color:var(--text-soft);cursor:pointer;font-size:.9rem;display:grid;place-items:center">✕</button>
+    </div>
+    <div id="legal-body" style="padding:1.3rem 1.5rem;overflow-y:auto;font-size:.85rem;color:var(--text-soft);line-height:1.75"></div>
+    <div style="padding:.65rem 1.5rem;border-top:1px solid var(--border);background:var(--surface2);display:flex;justify-content:flex-end">
+      <button onclick="closeLegal()" style="font-family:var(--ff-body);font-size:.82rem;font-weight:700;padding:.5rem 1.2rem;border:none;border-radius:var(--radius-sm);background:var(--accent);color:color-mix(in srgb,var(--accent) 5%,#000);cursor:pointer">Got it</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CALCULATOR DEFINITIONS — 50 SEO-Ready Pages
+═══════════════════════════════════════════════════════════ */
+const CALCS = [
+  /* ── AGE & DATE ─────────────────────────────────────────── */
+  {
+    id:'age-calculator', slug:'age-calculator', cat:'age',
+    icon:'🎂', title:'Age Calculator',
+    h1:'Age Calculator — Find Your Exact Age in Years, Months & Days',
+    desc:'Calculate your exact age in years, months, days, and hours. Find out how many days until your next birthday and discover your zodiac sign.',
+    keywords:'age calculator, how old am i, age in years months days, birthday calculator',
+    tags:['Free','Instant','No sign-up'],
+    faqs:[
+      {q:'How do I calculate my exact age?',a:'Enter your date of birth and click Calculate. The tool computes the precise difference between your birth date and today (or any reference date) giving you years, months, days, weeks, and hours.'},
+      {q:'Can I calculate age for a past or future date?',a:'Yes. Use the "As Of Date" field to calculate age as of any date — past, present, or future.'},
+      {q:'How many days until my next birthday?',a:'The calculator automatically shows the number of days remaining until your next birthday once you enter your date of birth.'},
+      {q:'What zodiac sign am I?',a:'The calculator determines your Western zodiac sign based on your birth month and day. For example, born March 21–April 19 means Aries.'},
+    ],
+    render: renderAge
+  },
+  {
+    id:'age-in-months', slug:'age-in-months-calculator', cat:'age',
+    icon:'📆', title:'Age in Months Calculator',
+    h1:'Age in Months Calculator — How Many Months Old Are You?',
+    desc:'Calculate your exact age in total months. Useful for baby development tracking, medical forms, and age-based eligibility checks.',
+    keywords:'age in months calculator, how many months old, baby age months',
+    tags:['Free','Instant'],
+    faqs:[
+      {q:'Why calculate age in months?',a:'Months are commonly used for baby and toddler development milestones, medical assessments, and certain legal age thresholds.'},
+      {q:'Is the result the total months lived?',a:'Yes — the result is your total months lived from birth to today, not just the month portion of your age.'},
+    ],
+    render: renderAgeMonths
+  },
+  {
+    id:'age-in-days', slug:'age-in-days-calculator', cat:'age',
+    icon:'📅', title:'Age in Days Calculator',
+    h1:'Age in Days Calculator — How Many Days Old Are You?',
+    desc:'Find out exactly how many days you have been alive. A fun and surprisingly interesting way to view your age.',
+    keywords:'age in days calculator, how many days old am i, days lived calculator',
+    tags:['Free','Fun fact'],
+    faqs:[
+      {q:'How are the days calculated?',a:'The calculator counts the exact number of calendar days between your date of birth and today, accounting for leap years.'},
+      {q:'Can I pick a custom end date?',a:'Yes — use the "As Of Date" field to count days to any specific date.'},
+    ],
+    render: renderAgeDays
+  },
+  {
+    id:'date-difference', slug:'date-difference-calculator', cat:'age',
+    icon:'📏', title:'Date Difference Calculator',
+    h1:'Date Difference Calculator — Days, Weeks, Months Between Two Dates',
+    desc:'Calculate the exact difference between any two dates in days, weeks, months, and years. Also counts workdays and weekends separately.',
+    keywords:'date difference calculator, days between dates, how many days between two dates',
+    tags:['Free','Workdays','Weekends'],
+    faqs:[
+      {q:'Does it count workdays separately?',a:'Yes — the calculator shows total days, workdays (Mon–Fri), and weekend days between the two dates.'},
+      {q:'Can I calculate past and future date differences?',a:'Absolutely. Enter any two dates — past, present, or future — in any order.'},
+    ],
+    render: renderDateDiff
+  },
+  {
+    id:'days-between-dates', slug:'days-between-dates', cat:'age',
+    icon:'🗓️', title:'Days Between Dates',
+    h1:'Days Between Dates Calculator — Count Days From One Date to Another',
+    desc:'Quickly count the exact number of days from one date to another. Perfect for project deadlines, countdowns, and event planning.',
+    keywords:'days between dates, count days between dates, days from date to date',
+    tags:['Free','Instant'],
+    faqs:[
+      {q:'What is the difference between this and the Date Difference Calculator?',a:'This tool focuses specifically on the total day count between two dates, making it simpler and faster for quick lookups.'},
+      {q:'Does it include the start and end dates?',a:'The count is inclusive of the start date — if today and tomorrow are entered, the result is 1 day.'},
+    ],
+    render: renderDaysBetween
+  },
+  {
+    id:'weeks-between-dates', slug:'weeks-between-dates', cat:'age',
+    icon:'📆', title:'Weeks Between Dates',
+    h1:'Weeks Between Dates Calculator — How Many Weeks Between Two Dates?',
+    desc:'Calculate the exact number of weeks (and remaining days) between any two dates. Useful for pregnancy tracking, project planning, and scheduling.',
+    keywords:'weeks between dates, how many weeks between dates, week calculator',
+    tags:['Free','Pregnancy','Planning'],
+    faqs:[
+      {q:'How are partial weeks handled?',a:'The result shows full weeks plus remaining days. For example, 10 days = 1 week + 3 days.'},
+      {q:'Is this useful for pregnancy tracking?',a:'Yes — pregnancy is commonly tracked in weeks. Enter your last menstrual period date to see how many weeks along you are.'},
+    ],
+    render: renderWeeksBetween
+  },
+  {
+    id:'countdown-calculator', slug:'countdown-calculator', cat:'age',
+    icon:'⏳', title:'Countdown Calculator',
+    h1:'Countdown Calculator — Days, Hours & Minutes Until Any Date',
+    desc:'Count down the exact days, hours, minutes, and seconds until any upcoming event, deadline, birthday, or holiday.',
+    keywords:'countdown calculator, days until, countdown to date, event countdown',
+    tags:['Free','Real-time'],
+    faqs:[
+      {q:'Does the countdown update in real time?',a:'Yes — once calculated, the countdown ticks down every second in real time.'},
+      {q:'Can I count down to any date and time?',a:'Yes — enter any future date and optionally a specific time to get a precise countdown.'},
+    ],
+    render: renderCountdown
+  },
+  {
+    id:'working-days', slug:'working-days-calculator', cat:'age',
+    icon:'💼', title:'Working Days Calculator',
+    h1:'Working Days Calculator — Count Business Days Between Dates',
+    desc:'Count the number of working days (Monday–Friday) between two dates. Excludes weekends automatically for accurate business day calculations.',
+    keywords:'working days calculator, business days calculator, workdays between dates',
+    tags:['Free','Business','Excludes weekends'],
+    faqs:[
+      {q:'Does it exclude public holidays?',a:'The calculator excludes weekends (Saturday & Sunday) automatically. For public holidays, you would need to subtract them manually as holidays vary by country.'},
+      {q:'What counts as a working day?',a:'Monday through Friday are counted as working days. Saturday and Sunday are excluded.'},
+    ],
+    render: renderWorkingDays
+  },
+
+  /* ── PERCENTAGE ──────────────────────────────────────────── */
+  {
+    id:'percentage-calculator', slug:'percentage-calculator', cat:'pct',
+    icon:'%', title:'Percentage Calculator',
+    h1:'Percentage Calculator — Calculate Any Percentage Instantly',
+    desc:'Calculate percentages in 4 different ways: X% of Y, what percent X is of Y, percent change, and part of total. Step-by-step explanations included.',
+    keywords:'percentage calculator, how to calculate percentage, percent calculator online',
+    tags:['Free','4 modes','Step-by-step'],
+    faqs:[
+      {q:'What is 15% of 200?',a:'15% of 200 = 30. Use Mode 1: enter 15 as the percentage and 200 as the value.'},
+      {q:'How do I calculate percentage increase?',a:'Use Mode 3 (Percent Change): enter the original value and new value. The formula is ((new - old) / old) × 100.'},
+      {q:'What is X% of Y formula?',a:'Multiply X by Y and divide by 100. Example: 20% of 150 = (20 × 150) / 100 = 30.'},
+    ],
+    render: renderPct
+  },
+  {
+    id:'percentage-increase', slug:'percentage-increase-calculator', cat:'pct',
+    icon:'📈', title:'Percentage Increase Calculator',
+    h1:'Percentage Increase Calculator — Calculate % Increase Between Two Numbers',
+    desc:'Find the percentage increase from one number to another. Shows the formula, step-by-step working, and the actual amount of increase.',
+    keywords:'percentage increase calculator, percent increase formula, calculate percentage increase',
+    tags:['Free','Formula shown'],
+    faqs:[
+      {q:'What is the percentage increase formula?',a:'Percentage Increase = ((New Value - Original Value) / Original Value) × 100. Example: from 80 to 100 = ((100-80)/80) × 100 = 25% increase.'},
+      {q:'What if the result is negative?',a:'A negative result means the value actually decreased. For a decrease, use the Percentage Decrease Calculator.'},
+    ],
+    render: renderPctIncrease
+  },
+  {
+    id:'percentage-decrease', slug:'percentage-decrease-calculator', cat:'pct',
+    icon:'📉', title:'Percentage Decrease Calculator',
+    h1:'Percentage Decrease Calculator — Calculate % Decrease Between Two Numbers',
+    desc:'Calculate the percentage decrease from one value to another. Perfect for tracking price drops, weight loss, cost reductions, and more.',
+    keywords:'percentage decrease calculator, percent decrease formula, how to calculate decrease',
+    tags:['Free','Formula shown'],
+    faqs:[
+      {q:'What is the percentage decrease formula?',a:'Percentage Decrease = ((Original - New) / Original) × 100. Example: from 100 to 75 = ((100-75)/100) × 100 = 25% decrease.'},
+      {q:'How is a price reduction calculated?',a:'Enter the original price and the sale price. The calculator shows the percentage discount and the amount saved.'},
+    ],
+    render: renderPctDecrease
+  },
+  {
+    id:'discount-calculator', slug:'discount-calculator', cat:'pct',
+    icon:'🏷️', title:'Discount Calculator',
+    h1:'Discount Calculator — Find Sale Price & Savings Instantly',
+    desc:'Calculate the sale price after a percentage discount. See exactly how much you save and what the final price will be before buying.',
+    keywords:'discount calculator, sale price calculator, percent off calculator, how much do I save',
+    tags:['Free','Savings','Sale price'],
+    faqs:[
+      {q:'How do I calculate 20% off a price?',a:'Multiply the original price by 0.20 to get the discount amount, then subtract from the original. Example: 20% off $50 = $50 × 0.20 = $10 saved → final price $40.'},
+      {q:'Can I calculate the original price from a discounted price?',a:'Enter the discounted price and discount percentage and the tool will reverse-calculate the original price.'},
+    ],
+    render: renderDiscount
+  },
+  {
+    id:'vat-calculator', slug:'vat-calculator', cat:'pct',
+    icon:'🧾', title:'VAT Calculator',
+    h1:'VAT Calculator — Add or Remove VAT from Any Price',
+    desc:'Easily add VAT to a net price or remove VAT from a gross price. Supports any VAT rate. Shows net price, VAT amount, and gross price clearly.',
+    keywords:'VAT calculator, add VAT, remove VAT, tax calculator, inclusive exclusive VAT',
+    tags:['Free','Add/Remove VAT','Any rate'],
+    faqs:[
+      {q:'How do I add VAT to a price?',a:'Enter the net (pre-tax) price and VAT rate. The calculator multiplies by (1 + rate/100) to give the gross (VAT-inclusive) price.'},
+      {q:'How do I remove VAT from a price?',a:'Enter the gross (VAT-inclusive) price and choose "Remove VAT". The formula is: Net = Gross ÷ (1 + rate/100).'},
+      {q:'What VAT rate should I use?',a:'VAT rates vary by country: UK 20%, EU countries typically 19–25%, etc. Enter your applicable local rate.'},
+    ],
+    render: renderVAT
+  },
+  {
+    id:'profit-margin', slug:'profit-margin-calculator', cat:'pct',
+    icon:'💹', title:'Profit Margin Calculator',
+    h1:'Profit Margin Calculator — Calculate Gross & Net Profit Margin',
+    desc:'Calculate gross profit, profit margin percentage, and markup from cost and selling price. Essential for pricing products and evaluating business performance.',
+    keywords:'profit margin calculator, gross profit calculator, profit percentage, margin vs markup',
+    tags:['Free','Margin & Markup'],
+    faqs:[
+      {q:'What is the difference between profit margin and markup?',a:'Profit margin = (Profit / Revenue) × 100. Markup = (Profit / Cost) × 100. A 50% markup gives a 33% profit margin.'},
+      {q:'How do I calculate gross profit margin?',a:'Gross Profit Margin = ((Selling Price - Cost) / Selling Price) × 100.'},
+    ],
+    render: renderProfitMargin
+  },
+
+  /* ── HEALTH ──────────────────────────────────────────────── */
+  {
+    id:'bmi-calculator', slug:'bmi-calculator', cat:'health',
+    icon:'⚖️', title:'BMI Calculator',
+    h1:'BMI Calculator — Check Your Body Mass Index Instantly',
+    desc:'Calculate your Body Mass Index (BMI) using height and weight. Shows BMI category, ideal weight range, BMI Prime, and Ponderal Index.',
+    keywords:'BMI calculator, body mass index, healthy weight calculator, am I overweight',
+    tags:['Free','kg & lbs','cm & inches'],
+    faqs:[
+      {q:'What is a healthy BMI range?',a:'A BMI between 18.5 and 24.9 is considered healthy. Under 18.5 is underweight, 25–29.9 is overweight, and 30+ is obese.'},
+      {q:'Is BMI accurate for everyone?',a:'BMI is a screening tool, not a diagnostic measure. It may not be accurate for athletes (high muscle mass), elderly, or pregnant women. Consult a healthcare professional for a full assessment.'},
+      {q:'What units does the calculator accept?',a:'The calculator accepts weight in kg or lbs, and height in cm or inches. Toggle between units using the buttons above each field.'},
+    ],
+    render: renderBMI
+  },
+  {
+    id:'bmr-calculator', slug:'bmr-calculator', cat:'health',
+    icon:'🔥', title:'BMR Calculator',
+    h1:'BMR Calculator — Find Your Basal Metabolic Rate',
+    desc:'Calculate your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor equation. Understand how many calories your body needs at rest.',
+    keywords:'BMR calculator, basal metabolic rate, calories at rest, mifflin st jeor',
+    tags:['Free','Mifflin-St Jeor','Male & Female'],
+    faqs:[
+      {q:'What is BMR?',a:'BMR (Basal Metabolic Rate) is the number of calories your body needs to perform basic life-sustaining functions at rest — breathing, circulation, cell production.'},
+      {q:'What formula does this calculator use?',a:'It uses the Mifflin-St Jeor equation, widely considered the most accurate: Male: (10×weight kg) + (6.25×height cm) - (5×age) + 5. Female: same but -161 instead of +5.'},
+      {q:'How is BMR different from TDEE?',a:'BMR is calories at complete rest. TDEE (Total Daily Energy Expenditure) multiplies BMR by an activity factor to estimate actual daily calorie needs.'},
+    ],
+    render: renderBMR
+  },
+  {
+    id:'calorie-calculator', slug:'calorie-calculator', cat:'health',
+    icon:'🍎', title:'Calorie Calculator',
+    h1:'Calorie Calculator — Daily Calorie Needs (TDEE) & Macros',
+    desc:'Calculate your daily calorie needs based on age, weight, height, and activity level. Get TDEE, BMR, and suggested macronutrient targets for your goal.',
+    keywords:'calorie calculator, TDEE calculator, daily calorie intake, how many calories should I eat',
+    tags:['Free','TDEE','Macros'],
+    faqs:[
+      {q:'How many calories should I eat to lose weight?',a:'A common approach is a 500 calorie/day deficit below your TDEE, which creates roughly 0.5kg (1lb) of weight loss per week. This calculator lets you select your goal and calculates the target automatically.'},
+      {q:'What is TDEE?',a:'Total Daily Energy Expenditure — the total calories you burn in a day including exercise and daily activities. Calculated as BMR × activity multiplier.'},
+      {q:'What are macros?',a:'Macronutrients: Protein, Carbohydrates, and Fat. The calculator suggests a 40/30/30 (carb/protein/fat) split as a starting point.'},
+    ],
+    render: renderCalorie
+  },
+  {
+    id:'water-intake', slug:'water-intake-calculator', cat:'health',
+    icon:'💧', title:'Water Intake Calculator',
+    h1:'Water Intake Calculator — How Much Water Should You Drink Daily?',
+    desc:'Calculate your recommended daily water intake based on your weight, activity level, and climate. Get a personalised hydration target in litres and cups.',
+    keywords:'water intake calculator, how much water should I drink, daily water intake, hydration calculator',
+    tags:['Free','Personalised','Litres & cups'],
+    faqs:[
+      {q:'How much water should I drink per day?',a:'The general guideline is 35ml per kg of body weight. A 70kg person needs ~2.45L daily. Activity and climate increase this need.'},
+      {q:'Does tea and coffee count toward water intake?',a:'Mild caffeinated drinks do contribute to hydration, though water is optimal. Heavily caffeinated drinks have a mild diuretic effect.'},
+      {q:'How does exercise affect water needs?',a:'For every hour of moderate exercise, add approximately 500–750ml to your baseline intake.'},
+    ],
+    render: renderWater
+  },
+  {
+    id:'ideal-weight', slug:'ideal-weight-calculator', cat:'health',
+    icon:'🎯', title:'Ideal Weight Calculator',
+    h1:'Ideal Weight Calculator — Find Your Healthy Weight Range',
+    desc:'Find your ideal body weight range using multiple formulas: Devine, Robinson, Miller, and Hamwi. Shows BMI-based healthy weight range too.',
+    keywords:'ideal weight calculator, healthy weight calculator, what should I weigh, ideal body weight',
+    tags:['Free','4 formulas','BMI range'],
+    faqs:[
+      {q:'What formulas are used?',a:'The calculator uses four established formulas: Devine (1974), Robinson (1983), Miller (1983), and Hamwi (1964), then averages them for a balanced estimate.'},
+      {q:'Is ideal weight the same for everyone of the same height?',a:'No — ideal weight varies by frame size, muscle mass, age, and gender. The formulas provide a general reference, not a strict target.'},
+    ],
+    render: renderIdealWeight
+  },
+
+  /* ── FINANCE ─────────────────────────────────────────────── */
+  {
+    id:'loan-emi', slug:'loan-emi-calculator', cat:'finance',
+    icon:'🏦', title:'Loan EMI Calculator',
+    h1:'Loan EMI Calculator — Monthly Payment, Total Interest & Amortisation',
+    desc:'Calculate your monthly EMI (Equated Monthly Instalment) for any loan. Shows total interest, total payable amount, and a full year-by-year amortisation schedule.',
+    keywords:'loan EMI calculator, EMI calculator, loan calculator, monthly payment calculator',
+    tags:['Free','Amortisation','Total interest'],
+    faqs:[
+      {q:'What is EMI?',a:'EMI (Equated Monthly Instalment) is the fixed monthly payment you make to repay a loan over a set period. It includes both principal and interest components.'},
+      {q:'What is the EMI formula?',a:'EMI = P × r × (1+r)^n / ((1+r)^n - 1), where P = principal, r = monthly interest rate, n = number of months.'},
+      {q:'How can I reduce my EMI?',a:'You can reduce EMI by making a larger down payment (reducing principal), getting a lower interest rate, or extending the loan term.'},
+    ],
+    render: renderLoanEMI
+  },
+  {
+    id:'simple-interest', slug:'simple-interest-calculator', cat:'finance',
+    icon:'💵', title:'Simple Interest Calculator',
+    h1:'Simple Interest Calculator — Calculate SI Amount & Total',
+    desc:'Calculate simple interest on any principal amount. Shows interest earned, total amount, and a year-by-year growth breakdown.',
+    keywords:'simple interest calculator, SI calculator, interest rate calculator, how to calculate simple interest',
+    tags:['Free','Formula shown'],
+    faqs:[
+      {q:'What is the simple interest formula?',a:'SI = (Principal × Rate × Time) / 100. Total Amount = Principal + SI.'},
+      {q:'What is the difference between simple and compound interest?',a:'Simple interest is calculated only on the original principal. Compound interest is calculated on principal plus accumulated interest, resulting in faster growth.'},
+    ],
+    render: renderSimpleInterest
+  },
+  {
+    id:'compound-interest', slug:'compound-interest-calculator', cat:'finance',
+    icon:'📈', title:'Compound Interest Calculator',
+    h1:'Compound Interest Calculator — Growth with Monthly Contributions',
+    desc:'Calculate compound interest with optional monthly contributions. Shows final value, total interest earned, and a year-by-year portfolio growth chart.',
+    keywords:'compound interest calculator, compound interest formula, investment calculator, savings growth',
+    tags:['Free','Contributions','Frequency options'],
+    faqs:[
+      {q:'What is the compound interest formula?',a:'A = P(1 + r/n)^(nt), where P = principal, r = annual rate, n = compounding periods per year, t = years.'},
+      {q:'How does compounding frequency affect returns?',a:'More frequent compounding = higher returns. Daily compounding earns slightly more than annual compounding at the same rate due to interest being added more often.'},
+    ],
+    render: renderCompound
+  },
+  {
+    id:'salary-calculator', slug:'salary-calculator', cat:'finance',
+    icon:'💼', title:'Salary Calculator',
+    h1:'Salary Calculator — Convert Annual, Monthly, Weekly & Hourly Pay',
+    desc:'Convert your salary between annual, monthly, fortnightly, weekly, daily, and hourly rates instantly. No tax calculations — pure gross salary conversion.',
+    keywords:'salary calculator, annual salary to monthly, hourly to annual, salary converter',
+    tags:['Free','All periods','Instant'],
+    faqs:[
+      {q:'How do I convert annual salary to monthly?',a:'Divide annual salary by 12. Example: $60,000 / 12 = $5,000 per month.'},
+      {q:'How do I convert hourly to annual salary?',a:'Multiply hourly rate × hours per day × working days per year. Standard: hourly × 8 × 260 = annual salary.'},
+      {q:'Does this include tax deductions?',a:'No — this calculator shows gross (pre-tax) salary conversions only. For net pay after tax, consult a tax calculator specific to your country.'},
+    ],
+    render: renderSalary
+  },
+  {
+    id:'savings-calculator', slug:'savings-calculator', cat:'finance',
+    icon:'🏦', title:'Savings Calculator',
+    h1:'Savings Calculator — How Much Will Your Savings Grow?',
+    desc:'Project your savings growth with regular contributions and compound interest. See how much you will have after any number of years.',
+    keywords:'savings calculator, savings goal calculator, how much to save, savings growth',
+    tags:['Free','Monthly contributions','Goal tracking'],
+    faqs:[
+      {q:'How much should I save per month?',a:'A common guideline is the 50/30/20 rule — save 20% of your income. Enter your target amount and timeline to see the required monthly saving.'},
+      {q:'What interest rate should I use?',a:'High-yield savings accounts typically offer 4–5% currently. For investments, a conservative long-term estimate is 6–8% annually.'},
+    ],
+    render: renderSavings
+  },
+
+  /* ── TIME & WORK ─────────────────────────────────────────── */
+  {
+    id:'time-duration', slug:'time-duration-calculator', cat:'time',
+    icon:'⏱️', title:'Time Duration Calculator',
+    h1:'Time Duration Calculator — Add & Subtract Hours, Minutes & Seconds',
+    desc:'Add or subtract time durations. Calculate the total time from multiple time segments — perfect for timesheets, billing, and project tracking.',
+    keywords:'time duration calculator, add hours minutes, timesheet calculator, total time calculator',
+    tags:['Free','HH:MM:SS','Add & Subtract'],
+    faqs:[
+      {q:'Can I add multiple time entries?',a:'Yes — add as many time entries as needed. The calculator sums them all to give a total duration.'},
+      {q:'How do I calculate hours worked?',a:'Enter your start time and end time, then subtract. For a lunch break, enter it as a separate subtraction.'},
+    ],
+    render: renderTimeDuration
+  },
+  {
+    id:'time-difference', slug:'time-difference-calculator', cat:'time',
+    icon:'🕐', title:'Time Difference Calculator',
+    h1:'Time Difference Calculator — Hours & Minutes Between Two Times',
+    desc:'Calculate the exact time difference between two times on the same day or across midnight. Shows hours, minutes, and seconds.',
+    keywords:'time difference calculator, hours between two times, time calculator, elapsed time',
+    tags:['Free','Crosses midnight','Instant'],
+    faqs:[
+      {q:'Does it work across midnight?',a:'Yes — if the end time is earlier than the start time, the calculator automatically assumes the end time is the next day (crossing midnight).'},
+      {q:'How do I calculate hours worked in a day?',a:'Enter your clock-in time as Start and clock-out time as End. The result gives your total hours and minutes worked.'},
+    ],
+    render: renderTimeDiff
+  },
+  {
+    id:'overtime-calculator', slug:'overtime-calculator', cat:'time',
+    icon:'⏰', title:'Overtime Calculator',
+    h1:'Overtime Calculator — Calculate Overtime Pay & Hours',
+    desc:'Calculate regular pay, overtime hours, and overtime pay based on hours worked and hourly rate. Supports 1.5x and 2x overtime multipliers.',
+    keywords:'overtime calculator, overtime pay calculator, time and a half calculator, overtime hours',
+    tags:['Free','1.5x & 2x','Weekly'],
+    faqs:[
+      {q:'What is time and a half?',a:'Time and a half means your overtime rate is 1.5 times your regular hourly rate. Working 10 overtime hours at $20/hr = $30/hr for those hours.'},
+      {q:'When does overtime start?',a:'In most countries, overtime begins after 40 hours in a work week, though this varies by jurisdiction and employment contract.'},
+    ],
+    render: renderOvertime
+  },
+
+  /* ── UNIT CONVERTERS ─────────────────────────────────────── */
+  {
+    id:'cm-to-feet', slug:'cm-to-feet', cat:'unit',
+    icon:'📏', title:'cm to feet',
+    h1:'Centimetres to Feet & Inches Converter — cm to ft',
+    desc:'Convert centimetres to feet and inches instantly. Accurate cm to ft in converter for height, dimensions, and measurements.',
+    keywords:'cm to feet, centimeters to feet, cm to ft, height converter cm to feet',
+    tags:['Free','Instant','Accurate'],
+    faqs:[
+      {q:'How many cm in a foot?',a:'1 foot = 30.48 centimetres. So to convert cm to feet, divide by 30.48.'},
+      {q:'How tall is 170 cm in feet?',a:'170 cm ÷ 30.48 = 5.577 feet = 5 feet 6.9 inches (approximately 5\'7").'},
+      {q:'How tall is 180 cm in feet?',a:'180 cm = 5 feet 10.9 inches (approximately 5\'11").'},
+    ],
+    render: ()=>renderUnitConv('length','Centimeter','Foot')
+  },
+  {
+    id:'feet-to-cm', slug:'feet-to-cm', cat:'unit',
+    icon:'📏', title:'feet to cm',
+    h1:'Feet to Centimetres Converter — ft to cm',
+    desc:'Convert feet and inches to centimetres quickly and accurately. Perfect for height conversion, fabric measurements, and international dimensions.',
+    keywords:'feet to cm, feet to centimeters, ft to cm, height converter feet to cm',
+    tags:['Free','Instant','Accurate'],
+    faqs:[
+      {q:'How many centimetres in a foot?',a:'1 foot = 30.48 cm. Multiply feet by 30.48 to convert to centimetres.'},
+      {q:'How tall is 6 feet in cm?',a:'6 feet × 30.48 = 182.88 cm.'},
+      {q:'How tall is 5 foot 7 in cm?',a:'5 feet 7 inches = (5 × 30.48) + (7 × 2.54) = 152.4 + 17.78 = 170.18 cm.'},
+    ],
+    render: ()=>renderUnitConv('length','Foot','Centimeter')
+  },
+  {
+    id:'kg-to-lbs', slug:'kg-to-lbs', cat:'unit',
+    icon:'⚖️', title:'kg to lbs',
+    h1:'Kilograms to Pounds Converter — kg to lbs',
+    desc:'Convert kilograms to pounds accurately and instantly. Enter any kg value for the exact lbs equivalent.',
+    keywords:'kg to lbs, kilograms to pounds, kg to pounds, weight converter',
+    tags:['Free','Instant','Accurate'],
+    faqs:[
+      {q:'How many lbs in a kg?',a:'1 kilogram = 2.20462 pounds. Multiply kg by 2.20462 to get lbs.'},
+      {q:'How much is 70 kg in lbs?',a:'70 kg × 2.20462 = 154.32 lbs.'},
+      {q:'How much is 100 kg in lbs?',a:'100 kg × 2.20462 = 220.46 lbs.'},
+    ],
+    render: ()=>renderUnitConv('weight','Kilogram','Pound')
+  },
+  {
+    id:'lbs-to-kg', slug:'lbs-to-kg', cat:'unit',
+    icon:'⚖️', title:'lbs to kg',
+    h1:'Pounds to Kilograms Converter — lbs to kg',
+    desc:'Convert pounds to kilograms quickly and accurately. Essential for weight tracking, fitness goals, and international use.',
+    keywords:'lbs to kg, pounds to kilograms, pounds to kg, weight converter',
+    tags:['Free','Instant','Accurate'],
+    faqs:[
+      {q:'How many kg in a pound?',a:'1 pound = 0.453592 kilograms. Divide lbs by 2.20462 to get kg.'},
+      {q:'How much is 150 lbs in kg?',a:'150 lbs ÷ 2.20462 = 68.04 kg.'},
+      {q:'How much is 200 lbs in kg?',a:'200 lbs ÷ 2.20462 = 90.72 kg.'},
+    ],
+    render: ()=>renderUnitConv('weight','Pound','Kilogram')
+  },
+  {
+    id:'km-to-miles', slug:'km-to-miles', cat:'unit',
+    icon:'🛣️', title:'km to miles',
+    h1:'Kilometres to Miles Converter — km to mi',
+    desc:'Convert kilometres to miles instantly. Accurate conversion for running distances, road trips, and international travel.',
+    keywords:'km to miles, kilometres to miles, km to mi, distance converter',
+    tags:['Free','Instant','Running','Travel'],
+    faqs:[
+      {q:'How many miles in a kilometre?',a:'1 kilometre = 0.621371 miles. Multiply km by 0.621371 to get miles.'},
+      {q:'How far is 5 km in miles?',a:'5 km × 0.621371 = 3.107 miles.'},
+      {q:'How far is a marathon in miles?',a:'A marathon is 42.195 km = 26.22 miles.'},
+    ],
+    render: ()=>renderUnitConv('length','Kilometer','Mile')
+  },
+  {
+    id:'miles-to-km', slug:'miles-to-km', cat:'unit',
+    icon:'🛣️', title:'miles to km',
+    h1:'Miles to Kilometres Converter — mi to km',
+    desc:'Convert miles to kilometres quickly and accurately. Perfect for distance conversions for travel, sports, and navigation.',
+    keywords:'miles to km, miles to kilometres, mi to km, distance converter',
+    tags:['Free','Instant','Accurate'],
+    faqs:[
+      {q:'How many kilometres in a mile?',a:'1 mile = 1.60934 kilometres. Multiply miles by 1.60934 to get km.'},
+      {q:'How far is 10 miles in km?',a:'10 miles × 1.60934 = 16.09 km.'},
+      {q:'How far is 26.2 miles (marathon) in km?',a:'26.2 miles × 1.60934 = 42.16 km.'},
+    ],
+    render: ()=>renderUnitConv('length','Mile','Kilometer')
+  },
+  {
+    id:'celsius-to-f', slug:'celsius-to-fahrenheit', cat:'unit',
+    icon:'🌡️', title:'Celsius to Fahrenheit',
+    h1:'Celsius to Fahrenheit Converter — °C to °F',
+    desc:'Convert Celsius to Fahrenheit instantly. Includes common temperature reference points and the full conversion formula.',
+    keywords:'celsius to fahrenheit, °C to °F, temperature converter, celsius fahrenheit',
+    tags:['Free','Instant','Formula shown'],
+    faqs:[
+      {q:'What is the Celsius to Fahrenheit formula?',a:'°F = (°C × 9/5) + 32. Example: 100°C × 9/5 + 32 = 212°F.'},
+      {q:'What is 37°C in Fahrenheit?',a:'37°C (normal body temperature) = 98.6°F.'},
+      {q:'What is 0°C in Fahrenheit?',a:'0°C (freezing point) = 32°F.'},
+    ],
+    render: ()=>renderTempConv('Celsius','Fahrenheit')
+  },
+  {
+    id:'fahrenheit-to-c', slug:'fahrenheit-to-celsius', cat:'unit',
+    icon:'🌡️', title:'Fahrenheit to Celsius',
+    h1:'Fahrenheit to Celsius Converter — °F to °C',
+    desc:'Convert Fahrenheit to Celsius instantly. Shows the formula, common reference temperatures, and works for any °F value.',
+    keywords:'fahrenheit to celsius, °F to °C, temperature converter, fahrenheit celsius',
+    tags:['Free','Instant','Formula shown'],
+    faqs:[
+      {q:'What is the Fahrenheit to Celsius formula?',a:'°C = (°F - 32) × 5/9. Example: 98.6°F - 32 = 66.6 × 5/9 = 37°C.'},
+      {q:'What is 72°F in Celsius?',a:'(72-32) × 5/9 = 40 × 5/9 = 22.2°C (a comfortable room temperature).'},
+      {q:'At what temperature are Celsius and Fahrenheit equal?',a:'At -40°. -40°C = -40°F.'},
+    ],
+    render: ()=>renderTempConv('Fahrenheit','Celsius')
+  },
+
+  /* ── UTILITIES ───────────────────────────────────────────── */
+  {
+    id:'average-calculator', slug:'average-calculator', cat:'util',
+    icon:'📊', title:'Average Calculator',
+    h1:'Average Calculator — Mean, Median & Mode of Any Numbers',
+    desc:'Calculate the mean, median, mode, range, and sum of any set of numbers. Accepts comma-separated, space-separated, or one-per-line input.',
+    keywords:'average calculator, mean calculator, median calculator, how to calculate average',
+    tags:['Free','Mean, Median, Mode','Instant'],
+    faqs:[
+      {q:'What is the difference between mean, median, and mode?',a:'Mean = sum divided by count. Median = middle value when sorted. Mode = most frequently occurring value.'},
+      {q:'Which average should I use?',a:'Use mean for normal distributions, median for skewed data or when outliers exist, and mode for categorical data.'},
+    ],
+    render: renderAverage
+  },
+  {
+    id:'tip-calculator', slug:'tip-calculator', cat:'util',
+    icon:'🍽️', title:'Tip Calculator',
+    h1:'Tip Calculator — Split Bills & Calculate Tips Instantly',
+    desc:'Calculate the tip amount, total bill per person, and individual share for any dining bill. Supports custom tip percentages and bill splitting.',
+    keywords:'tip calculator, restaurant tip calculator, how much to tip, split bill calculator',
+    tags:['Free','Bill splitting','Custom tip'],
+    faqs:[
+      {q:'How much should I tip?',a:'Standard tips: 15% for adequate service, 18–20% for good service, 20–25%+ for excellent service. Tip on the pre-tax amount.'},
+      {q:'How do I split a bill equally?',a:'Enter the bill total, tip percentage, and number of people. The calculator shows the per-person share including tip.'},
+    ],
+    render: renderTip
+  },
+  {
+    id:'fuel-cost', slug:'fuel-cost-calculator', cat:'util',
+    icon:'⛽', title:'Fuel Cost Calculator',
+    h1:'Fuel Cost Calculator — Calculate Trip Fuel Cost & Consumption',
+    desc:'Estimate the fuel cost for any journey based on distance, fuel efficiency, and current fuel price. Supports km/L, L/100km, and mpg.',
+    keywords:'fuel cost calculator, petrol cost calculator, trip cost calculator, fuel consumption calculator',
+    tags:['Free','km/L & L/100km','Any currency'],
+    faqs:[
+      {q:'How is fuel cost calculated?',a:'Fuel Cost = (Distance / Fuel Efficiency) × Fuel Price. For L/100km: Cost = (Distance × Fuel/100km × Price/L).'},
+      {q:'What is good fuel efficiency?',a:'For cars: 6–8 L/100km (35–40 mpg) is good. Under 6 L/100km is excellent. Over 10 L/100km is poor.'},
+    ],
+    render: renderFuelCost
+  },
+  {
+    id:'random-number', slug:'random-number-generator', cat:'util',
+    icon:'🎲', title:'Random Number Generator',
+    h1:'Random Number Generator — Generate Random Numbers Instantly',
+    desc:'Generate one or multiple random numbers within any range. Supports integers and decimals, with option for no-repeat draws.',
+    keywords:'random number generator, random number between 1 and 100, generate random number',
+    tags:['Free','Any range','No repeats option'],
+    faqs:[
+      {q:'Is this truly random?',a:'The generator uses JavaScript\'s crypto.getRandomValues() for cryptographically strong randomness — far better than Math.random().'},
+      {q:'Can I generate a random number between 1 and 10?',a:'Yes — set Min to 1 and Max to 10. Click Generate for a new random number each time.'},
+    ],
+    render: renderRandom
+  },
+];
+
+/* ═══ CATEGORY DEFINITIONS ════════════════════════════════════ */
+const CATS = {
+  age:     { label:'Age & Date',    icon:'📅', color:'var(--cat-age)' },
+  pct:     { label:'Percentage',    icon:'%',  color:'var(--cat-pct)' },
+  health:  { label:'Health',        icon:'❤️', color:'var(--cat-health)' },
+  finance: { label:'Finance',       icon:'💰', color:'var(--cat-finance)' },
+  time:    { label:'Time & Work',   icon:'⏱️', color:'var(--cat-time)' },
+  unit:    { label:'Unit Converters',icon:'📐', color:'var(--cat-unit)' },
+  util:    { label:'Utilities',     icon:'🔧', color:'var(--cat-util)' },
+};
+
+/* Related calculators map — curated cross-links per tool */
+const RELATED = {
+  'age-calculator':       ['age-in-months','age-in-days','date-difference','birthday-countdown','countdown-calculator'],
+  'age-in-months':        ['age-calculator','age-in-days','date-difference','weeks-between-dates'],
+  'age-in-days':          ['age-calculator','age-in-months','date-difference','days-between-dates'],
+  'date-difference':      ['days-between-dates','weeks-between-dates','working-days','countdown-calculator','age-calculator'],
+  'days-between-dates':   ['date-difference','weeks-between-dates','working-days','countdown-calculator'],
+  'weeks-between-dates':  ['date-difference','days-between-dates','working-days'],
+  'countdown-calculator': ['date-difference','days-between-dates','age-calculator','time-duration'],
+  'working-days':         ['date-difference','days-between-dates','time-duration','overtime-calculator'],
+  'percentage-calculator':['percentage-increase','percentage-decrease','discount-calculator','vat-calculator','profit-margin'],
+  'percentage-increase':  ['percentage-decrease','percentage-calculator','profit-margin','discount-calculator'],
+  'percentage-decrease':  ['percentage-increase','percentage-calculator','discount-calculator','vat-calculator'],
+  'discount-calculator':  ['vat-calculator','profit-margin','percentage-calculator','percentage-decrease'],
+  'vat-calculator':       ['discount-calculator','profit-margin','percentage-calculator','simple-interest'],
+  'profit-margin':        ['discount-calculator','vat-calculator','percentage-increase','simple-interest','compound-interest'],
+  'bmi-calculator':       ['bmr-calculator','calorie-calculator','ideal-weight','water-intake'],
+  'bmr-calculator':       ['calorie-calculator','bmi-calculator','ideal-weight','water-intake'],
+  'calorie-calculator':   ['bmr-calculator','bmi-calculator','ideal-weight','water-intake'],
+  'water-intake':         ['bmi-calculator','calorie-calculator','bmr-calculator','ideal-weight'],
+  'ideal-weight':         ['bmi-calculator','bmr-calculator','calorie-calculator'],
+  'loan-emi':             ['simple-interest','compound-interest','savings-calculator','percentage-calculator'],
+  'simple-interest':      ['compound-interest','loan-emi','savings-calculator','percentage-calculator'],
+  'compound-interest':    ['simple-interest','savings-calculator','loan-emi','percentage-increase'],
+  'salary-calculator':    ['overtime-calculator','time-duration','percentage-increase','compound-interest'],
+  'savings-calculator':   ['compound-interest','simple-interest','loan-emi','salary-calculator'],
+  'time-duration':        ['time-difference','overtime-calculator','working-days','salary-calculator'],
+  'time-difference':      ['time-duration','overtime-calculator','working-days','countdown-calculator'],
+  'overtime-calculator':  ['salary-calculator','time-duration','time-difference','working-days'],
+  'cm-to-feet':           ['feet-to-cm','kg-to-lbs','bmi-calculator','ideal-weight'],
+  'feet-to-cm':           ['cm-to-feet','kg-to-lbs','bmi-calculator','ideal-weight'],
+  'kg-to-lbs':            ['lbs-to-kg','cm-to-feet','bmi-calculator','ideal-weight'],
+  'lbs-to-kg':            ['kg-to-lbs','cm-to-feet','bmi-calculator','calorie-calculator'],
+  'km-to-miles':          ['miles-to-km','fuel-cost','time-duration'],
+  'miles-to-km':          ['km-to-miles','fuel-cost','time-duration'],
+  'celsius-to-f':         ['fahrenheit-to-c','water-intake'],
+  'fahrenheit-to-c':      ['celsius-to-f','water-intake'],
+  'average-calculator':   ['percentage-calculator','tip-calculator','salary-calculator'],
+  'tip-calculator':       ['average-calculator','discount-calculator','percentage-calculator'],
+  'fuel-cost':            ['km-to-miles','miles-to-km','time-duration'],
+  'random-number':        ['average-calculator','percentage-calculator'],
+};
+
+/* ═══ UNIT CONVERSION TABLES ══════════════════════════════════ */
+const UNITS = {
+  length:  { Millimeter:.001, Centimeter:.01, Meter:1, Kilometer:1000, Inch:.0254, Foot:.3048, Yard:.9144, Mile:1609.344 },
+  weight:  { Milligram:1e-6, Gram:.001, Kilogram:1, Pound:.453592, Ounce:.0283495, Stone:6.35029 },
+  temp:    { Celsius:'C', Fahrenheit:'F', Kelvin:'K' },
+  area:    { 'Sq m':1, 'Sq km':1e6, 'Sq foot':.092903, Acre:4046.86 },
+  speed:   { 'm/s':1, 'km/h':.277778, mph:.44704 },
+  volume:  { Milliliter:.001, Liter:1, 'US gallon':3.78541, 'US fl oz':.0295735 },
+  energy:  { Joule:1, Kilojoule:1000, Calorie:4.184, Kilocalorie:4184 },
+};
+
+/* ═══ HELPERS ═════════════════════════════════════════════════ */
+function fmt(n,d=2){ return parseFloat(n.toFixed(d)).toLocaleString(); }
+function fmtN(n){ return n.toLocaleString(undefined,{maximumFractionDigits:6}); }
+function el(id){ return document.getElementById(id); }
+function showRes(id,html,cls='result--ok'){
+  const e=el(id); e.className='result '+cls+' show'; e.innerHTML=html;
+}
+function hideRes(id){ const e=el(id); e.className='result'; e.innerHTML=''; }
+function err(id,msg){ showRes(id,`<div class="result-title">⚠️ ${msg}</div>`,'result--error'); }
+function copyBtn(id){
+  return `<button class="result-copy" onclick="copyResultBtn(this,'${id}')">Copy</button>`;
+}
+function clearF(...ids){ ids.forEach(i=>{ const e=el(i); if(e) e.value=''; }); }
+
+/* ═══ RENDER FUNCTIONS ════════════════════════════════════════ */
+
+/* AGE CALCULATOR */
+function renderAge(pid){
+  return `
+    <div class="field-row">
+      <div class="field"><label for="${pid}-dob">Date of Birth</label><input type="date" id="${pid}-dob" max="${new Date().toISOString().split('T')[0]}"/></div>
+      <div class="field"><label for="${pid}-ref">As Of Date (optional)</label><input type="date" id="${pid}-ref"/></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="calcAgeMain('${pid}')">Calculate Age</button>
+      <button class="btn-secondary" onclick="clearF('${pid}-dob','${pid}-ref');hideRes('${pid}-res')">Reset</button>
+    </div>
+    <div id="${pid}-res" class="result"></div>`;
+}
+function calcAgeMain(pid){
+  const dv=el(`${pid}-dob`).value, rv=el(`${pid}-ref`).value;
+  if(!dv){err(`${pid}-res`,'Please select a date of birth.');return;}
+  const dob=new Date(dv),ref=rv?new Date(rv):new Date();
+  if(dob>=ref){err(`${pid}-res`,'Date of birth must be in the past.');return;}
+  let yr=ref.getFullYear()-dob.getFullYear(),mo=ref.getMonth()-dob.getMonth(),dy=ref.getDate()-dob.getDate();
+  if(dy<0){mo--;dy+=new Date(ref.getFullYear(),ref.getMonth(),0).getDate();}
+  if(mo<0){yr--;mo+=12;}
+  const td=Math.round((ref-dob)/86400000);
+  const next=new Date(ref.getFullYear(),dob.getMonth(),dob.getDate());
+  if(next<=ref)next.setFullYear(ref.getFullYear()+1);
+  const dbn=Math.round((next-ref)/86400000);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🎂 ${yr} years, ${mo} months, ${dy} days</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${yr}</div><div class="stat-l">Years</div></div>
+      <div class="stat-cell"><div class="stat-n">${mo}</div><div class="stat-l">Months</div></div>
+      <div class="stat-cell"><div class="stat-n">${dy}</div><div class="stat-l">Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${td.toLocaleString()}</div><div class="stat-l">Total Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.floor(td/7).toLocaleString()}</div><div class="stat-l">Weeks</div></div>
+      <div class="stat-cell"><div class="stat-n">${dbn}</div><div class="stat-l">Days to B-day</div></div>
+    </div>`);
+}
+
+/* AGE IN MONTHS */
+function renderAgeMonths(pid){
+  return `<div class="field"><label for="${pid}-dob">Date of Birth</label><input type="date" id="${pid}-dob" max="${new Date().toISOString().split('T')[0]}"/></div>
+    <div class="btn-row"><button class="btn-primary" onclick="calcAgeMonths('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-dob');hideRes('${pid}-res')">Reset</button></div>
+    <div id="${pid}-res" class="result"></div>`;
+}
+function calcAgeMonths(pid){
+  const dv=el(`${pid}-dob`).value;
+  if(!dv){err(`${pid}-res`,'Please select a date of birth.');return;}
+  const dob=new Date(dv),now=new Date();
+  if(dob>=now){err(`${pid}-res`,'Date must be in the past.');return;}
+  let yr=now.getFullYear()-dob.getFullYear(),mo=now.getMonth()-dob.getMonth();
+  if(now.getDate()<dob.getDate())mo--;
+  if(mo<0){yr--;mo+=12;}
+  const totalMonths=yr*12+mo;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}📆 ${totalMonths.toLocaleString()} months old</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${totalMonths.toLocaleString()}</div><div class="stat-l">Total Months</div></div>
+      <div class="stat-cell"><div class="stat-n">${yr}</div><div class="stat-l">Years</div></div>
+      <div class="stat-cell"><div class="stat-n">${mo}</div><div class="stat-l">Extra Months</div></div>
+    </div>`);
+}
+
+/* AGE IN DAYS */
+function renderAgeDays(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-dob">Date of Birth</label><input type="date" id="${pid}-dob" max="${new Date().toISOString().split('T')[0]}"/></div>
+    <div class="field"><label for="${pid}-ref">As Of Date (optional)</label><input type="date" id="${pid}-ref"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcAgeDays('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-dob','${pid}-ref');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcAgeDays(pid){
+  const dv=el(`${pid}-dob`).value,rv=el(`${pid}-ref`).value;
+  if(!dv){err(`${pid}-res`,'Please select a date of birth.');return;}
+  const dob=new Date(dv),ref=rv?new Date(rv):new Date();
+  if(dob>=ref){err(`${pid}-res`,'Date must be in the past.');return;}
+  const td=Math.round((ref-dob)/86400000);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}📅 ${td.toLocaleString()} days old</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${td.toLocaleString()}</div><div class="stat-l">Total Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.floor(td/7).toLocaleString()}</div><div class="stat-l">Weeks</div></div>
+      <div class="stat-cell"><div class="stat-n">${(td*24).toLocaleString()}</div><div class="stat-l">Hours</div></div>
+    </div>`);
+}
+
+/* DATE DIFFERENCE */
+function renderDateDiff(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-s">Start Date</label><input type="date" id="${pid}-s"/></div>
+    <div class="field"><label for="${pid}-e">End Date</label><input type="date" id="${pid}-e"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcDateDiff('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-s','${pid}-e');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcDateDiff(pid){
+  const sv=el(`${pid}-s`).value,ev=el(`${pid}-e`).value;
+  if(!sv||!ev){err(`${pid}-res`,'Please select both dates.');return;}
+  const s=new Date(sv),e=new Date(ev);
+  if(e<s){err(`${pid}-res`,'End date must be after start date.');return;}
+  const td=Math.round((e-s)/86400000);
+  let yr=e.getFullYear()-s.getFullYear(),mo=e.getMonth()-s.getMonth(),dy=e.getDate()-s.getDate();
+  if(dy<0){mo--;dy+=new Date(e.getFullYear(),e.getMonth(),0).getDate();}
+  if(mo<0){yr--;mo+=12;}
+  let wd=0,cur=new Date(s);
+  while(cur<=e){if(cur.getDay()!==0&&cur.getDay()!==6)wd++;cur.setDate(cur.getDate()+1);}
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}📏 ${yr}y ${mo}m ${dy}d</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${td.toLocaleString()}</div><div class="stat-l">Total Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.floor(td/7)}</div><div class="stat-l">Weeks</div></div>
+      <div class="stat-cell"><div class="stat-n">${yr*12+mo}</div><div class="stat-l">Months</div></div>
+      <div class="stat-cell"><div class="stat-n">${wd.toLocaleString()}</div><div class="stat-l">Workdays</div></div>
+      <div class="stat-cell"><div class="stat-n">${(td-wd).toLocaleString()}</div><div class="stat-l">Weekends</div></div>
+    </div>`);
+}
+
+/* DAYS BETWEEN */
+function renderDaysBetween(pid){ return renderDateDiff(pid); }
+
+/* WEEKS BETWEEN */
+function renderWeeksBetween(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-s">Start Date</label><input type="date" id="${pid}-s"/></div>
+    <div class="field"><label for="${pid}-e">End Date</label><input type="date" id="${pid}-e"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcWeeks('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-s','${pid}-e');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcWeeks(pid){
+  const sv=el(`${pid}-s`).value,ev=el(`${pid}-e`).value;
+  if(!sv||!ev){err(`${pid}-res`,'Select both dates.');return;}
+  const s=new Date(sv),e=new Date(ev);
+  if(e<s){err(`${pid}-res`,'End date must be after start date.');return;}
+  const td=Math.round((e-s)/86400000);
+  const wk=Math.floor(td/7),rem=td%7;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}📆 ${wk} weeks${rem>0?' + '+rem+' day'+(rem>1?'s':''):''}</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${wk}</div><div class="stat-l">Full Weeks</div></div>
+      <div class="stat-cell"><div class="stat-n">${rem}</div><div class="stat-l">Extra Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${td}</div><div class="stat-l">Total Days</div></div>
+    </div>`);
+}
+
+/* COUNTDOWN */
+let cdInterval=null;
+function renderCountdown(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-dt">Target Date & Time</label><input type="datetime-local" id="${pid}-dt"/></div>
+    <div class="field"><label for="${pid}-lbl">Event Name (optional)</label><input type="text" id="${pid}-lbl" placeholder="e.g. My Birthday"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="startCountdown('${pid}')">Start Countdown</button><button class="btn-secondary" onclick="stopCountdown('${pid}')">Stop</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function startCountdown(pid){
+  if(cdInterval)clearInterval(cdInterval);
+  const dtv=el(`${pid}-dt`).value;
+  if(!dtv){err(`${pid}-res`,'Please select a target date and time.');return;}
+  const target=new Date(dtv);
+  if(target<=new Date()){err(`${pid}-res`,'Target date must be in the future.');return;}
+  const lbl=el(`${pid}-lbl`).value||'Event';
+  function tick(){
+    const now=new Date(),diff=target-now;
+    if(diff<=0){clearInterval(cdInterval);showRes(`${pid}-res`,`<div class="result-title">🎉 ${lbl} has arrived!</div>`);return;}
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    showRes(`${pid}-res`,`<div class="result-title">⏳ Countdown to ${lbl}</div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="stat-n">${d}</div><div class="stat-l">Days</div></div>
+        <div class="stat-cell"><div class="stat-n">${h}</div><div class="stat-l">Hours</div></div>
+        <div class="stat-cell"><div class="stat-n">${m}</div><div class="stat-l">Minutes</div></div>
+        <div class="stat-cell"><div class="stat-n">${s}</div><div class="stat-l">Seconds</div></div>
+      </div>`);
+  }
+  tick(); cdInterval=setInterval(tick,1000);
+}
+function stopCountdown(pid){if(cdInterval){clearInterval(cdInterval);cdInterval=null;}}
+
+/* WORKING DAYS */
+function renderWorkingDays(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-s">Start Date</label><input type="date" id="${pid}-s"/></div>
+    <div class="field"><label for="${pid}-e">End Date</label><input type="date" id="${pid}-e"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcWorkingDays('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-s','${pid}-e');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcWorkingDays(pid){
+  const sv=el(`${pid}-s`).value,ev=el(`${pid}-e`).value;
+  if(!sv||!ev){err(`${pid}-res`,'Please select both dates.');return;}
+  const s=new Date(sv),e=new Date(ev);
+  if(e<s){err(`${pid}-res`,'End date must be after start date.');return;}
+  let wd=0,we=0,cur=new Date(s);
+  while(cur<=e){
+    const d=cur.getDay();
+    if(d===0||d===6)we++;else wd++;
+    cur.setDate(cur.getDate()+1);
+  }
+  const td=Math.round((e-s)/86400000);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}💼 <strong>${wd.toLocaleString()}</strong> working days</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${wd.toLocaleString()}</div><div class="stat-l">Working Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${we.toLocaleString()}</div><div class="stat-l">Weekend Days</div></div>
+      <div class="stat-cell"><div class="stat-n">${td.toLocaleString()}</div><div class="stat-l">Total Days</div></div>
+    </div>`);
+}
+
+/* PERCENTAGE */
+let pctMode='basic';
+function renderPct(pid){
+  return `<div class="field" style="margin-bottom:-.2rem"><span class="lbl">Mode</span>
+    <div class="pill-toggle" style="margin-top:.35rem;flex-wrap:wrap;gap:3px">
+      <button class="pill-btn active" id="${pid}-m1" onclick="setPctM('${pid}','basic',this)">X% of Y</button>
+      <button class="pill-btn" id="${pid}-m2" onclick="setPctM('${pid}','what',this)">X is ?% of Y</button>
+      <button class="pill-btn" id="${pid}-m3" onclick="setPctM('${pid}','change',this)">% Change</button>
+      <button class="pill-btn" id="${pid}-m4" onclick="setPctM('${pid}','of',this)">Part of Total</button>
+    </div>
+  </div>
+  <div id="${pid}-inputs"></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcPctMain('${pid}')">Calculate</button><button class="btn-secondary" onclick="resetPctM('${pid}')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+const PCT_MODES={
+  basic:`<div class="field-row"><div class="field"><label for="PCT_PID-a">Percentage (%)</label><input type="number" id="PCT_PID-a" step="any" placeholder="15"/></div><div class="field"><label for="PCT_PID-b">Of Value</label><input type="number" id="PCT_PID-b" step="any" placeholder="200"/></div></div>`,
+  what:`<div class="field-row"><div class="field"><label for="PCT_PID-a">Value X</label><input type="number" id="PCT_PID-a" step="any" placeholder="30"/></div><div class="field"><label for="PCT_PID-b">Is ?% of Y</label><input type="number" id="PCT_PID-b" step="any" placeholder="200"/></div></div>`,
+  change:`<div class="field-row"><div class="field"><label for="PCT_PID-a">Original Value</label><input type="number" id="PCT_PID-a" step="any" placeholder="80"/></div><div class="field"><label for="PCT_PID-b">New Value</label><input type="number" id="PCT_PID-b" step="any" placeholder="100"/></div></div>`,
+  of:`<div class="field-row"><div class="field"><label for="PCT_PID-a">Part</label><input type="number" id="PCT_PID-a" step="any" placeholder="30"/></div><div class="field"><label for="PCT_PID-b">Total</label><input type="number" id="PCT_PID-b" step="any" placeholder="120"/></div></div>`
+};
+const pctModeState={};
+function setPctM(pid,m,btn){
+  pctModeState[pid]=m;
+  el(`${pid}-inputs`).innerHTML=PCT_MODES[m].replace(/PCT_PID/g,pid);
+  el(`${pid}-inputs`).querySelectorAll('label').forEach(l=>{l.className='';});
+  el(`${pid}-res`).className='result';
+  el(`${pid}-m1`).classList.toggle('active',m==='basic');
+  el(`${pid}-m2`).classList.toggle('active',m==='what');
+  el(`${pid}-m3`).classList.toggle('active',m==='change');
+  el(`${pid}-m4`).classList.toggle('active',m==='of');
+}
+function resetPctM(pid){
+  clearF(`${pid}-a`,`${pid}-b`);
+  hideRes(`${pid}-res`);
+}
+function calcPctMain(pid){
+  const m=pctModeState[pid]||'basic';
+  const a=parseFloat(el(`${pid}-a`)?.value),b=parseFloat(el(`${pid}-b`)?.value);
+  if(isNaN(a)||isNaN(b)){err(`${pid}-res`,'Fill in both values.');return;}
+  let res,lbl;
+  switch(m){
+    case'basic':res=(a/100)*b;lbl=`${fmt(a)}% of ${fmt(b)} = <strong>${fmt(res,4)}</strong>`;break;
+    case'what':if(b===0){err(`${pid}-res`,"Y can't be zero.");return;}res=(a/b)*100;lbl=`${fmt(a)} is <strong>${fmt(res,4)}%</strong> of ${fmt(b)}`;break;
+    case'change':if(a===0){err(`${pid}-res`,"Original can't be zero.");return;}res=((b-a)/Math.abs(a))*100;{const icon=res>0?'📈':res<0?'📉':'➖';const chLabel=res>0?'increase':res<0?'decrease':'no change';lbl=`${icon} <span style="color:${res>0?'#22c55e':res<0?'#ef4444':'var(--text-mute)'}">${fmt(Math.abs(res),2)}% ${chLabel}</span> (${fmt(a)} → ${fmt(b)})`;}break;
+    case'of':if(b===0){err(`${pid}-res`,"Total can't be zero.");return;}res=(a/b)*100;lbl=`${fmt(a)} is <strong>${fmt(res,4)}%</strong> of ${fmt(b)}`;break;
+  }
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}% ${lbl}</div>`);
+}
+
+/* PERCENTAGE INCREASE */
+function renderPctIncrease(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-a">Original Value</label><input type="number" id="${pid}-a" step="any" placeholder="80"/></div>
+    <div class="field"><label for="${pid}-b">New Value</label><input type="number" id="${pid}-b" step="any" placeholder="100"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcPctChange('${pid}','increase')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-a','${pid}-b');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function renderPctDecrease(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-a">Original Value</label><input type="number" id="${pid}-a" step="any" placeholder="100"/></div>
+    <div class="field"><label for="${pid}-b">New Value</label><input type="number" id="${pid}-b" step="any" placeholder="75"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcPctChange('${pid}','decrease')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-a','${pid}-b');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcPctChange(pid,type){
+  const a=parseFloat(el(`${pid}-a`)?.value),b=parseFloat(el(`${pid}-b`)?.value);
+  if(isNaN(a)||isNaN(b)||a===0){err(`${pid}-res`,'Enter valid values. Original cannot be zero.');return;}
+  const change=((b-a)/Math.abs(a))*100;
+  const amount=Math.abs(b-a);
+  const icon=change>=0?'📈':'📉';
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}${icon} ${Math.abs(change).toFixed(2)}% ${change>=0?'increase':'decrease'}</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${Math.abs(change).toFixed(2)}%</div><div class="stat-l">${change>=0?'Increase':'Decrease'}</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(amount,2)}</div><div class="stat-l">Amount ${change>=0?'Added':'Reduced'}</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(b,2)}</div><div class="stat-l">New Value</div></div>
+    </div>
+    <div style="font-size:.8rem;color:var(--text-soft);margin-top:.5rem">Formula: ((${fmt(b,2)} − ${fmt(a,2)}) ÷ ${fmt(a,2)}) × 100 = ${change.toFixed(2)}%</div>`);
+}
+
+/* DISCOUNT */
+function renderDiscount(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-price">Original Price ($)</label><input type="number" id="${pid}-price" step="any" placeholder="100"/></div>
+    <div class="field"><label for="${pid}-disc">Discount (%)</label><input type="number" id="${pid}-disc" step="any" min="0" max="100" placeholder="20"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcDiscount('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-price','${pid}-disc');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcDiscount(pid){
+  const price=parseFloat(el(`${pid}-price`)?.value),disc=parseFloat(el(`${pid}-disc`)?.value);
+  if(isNaN(price)||isNaN(disc)||price<=0||disc<0||disc>100){err(`${pid}-res`,'Enter a valid price and discount (0–100%).');return;}
+  const saved=price*(disc/100),final=price-saved;
+  const saleLabel=disc===100?'Free!':'$'+fmt(final,2);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🏷️ Sale Price: <strong>${saleLabel}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${disc===100?'Free!':'$'+fmt(final,2)}</div><div class="stat-l">Sale Price</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(saved,2)}</div><div class="stat-l">You Save</div></div>
+      <div class="stat-cell"><div class="stat-n">${disc}%</div><div class="stat-l">Discount</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(price,2)}</div><div class="stat-l">Original Price</div></div>
+    </div>`);
+}
+
+/* VAT */
+function renderVAT(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-amt">Amount ($)</label><input type="number" id="${pid}-amt" step="any" placeholder="100"/></div>
+    <div class="field"><label for="${pid}-rate">VAT Rate (%)</label><input type="number" id="${pid}-rate" step="any" placeholder="20"/></div>
+  </div>
+  <div class="field"><span class="lbl">Mode</span>
+    <div class="pill-toggle" style="margin-top:.35rem">
+      <button class="pill-btn active" id="${pid}-add" onclick="el('${pid}-add').classList.add('active');el('${pid}-rem').classList.remove('active')">Add VAT</button>
+      <button class="pill-btn" id="${pid}-rem" onclick="el('${pid}-rem').classList.add('active');el('${pid}-add').classList.remove('active')">Remove VAT</button>
+    </div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcVAT('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-amt','${pid}-rate');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcVAT(pid){
+  const amt=parseFloat(el(`${pid}-amt`)?.value),rate=parseFloat(el(`${pid}-rate`)?.value);
+  if(isNaN(amt)||isNaN(rate)||amt<=0||rate<0){err(`${pid}-res`,'Enter valid amount and VAT rate.');return;}
+  const adding=el(`${pid}-add`).classList.contains('active');
+  let net,vat,gross;
+  if(adding){net=amt;vat=amt*(rate/100);gross=amt+vat;}
+  else{gross=amt;net=gross/(1+rate/100);vat=gross-net;}
+  const vatNote=rate===0?'<div style="font-size:.78rem;color:var(--text-mute);margin-bottom:.4rem">ℹ️ VAT rate is 0% — net and gross amounts are equal.</div>':'';
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🧾 ${adding?'Gross (inc. VAT)':'Net (ex. VAT)'}: <strong>$${fmt(adding?gross:net,2)}</strong></div>
+    ${vatNote}
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(net,2)}</div><div class="stat-l">Net (ex-VAT)</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(vat,2)}</div><div class="stat-l">VAT Amount</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(gross,2)}</div><div class="stat-l">Gross (inc-VAT)</div></div>
+    </div>`);
+}
+
+/* PROFIT MARGIN */
+function renderProfitMargin(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-cost">Cost Price ($)</label><input type="number" id="${pid}-cost" step="any" placeholder="50"/></div>
+    <div class="field"><label for="${pid}-sell">Selling Price ($)</label><input type="number" id="${pid}-sell" step="any" placeholder="80"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcMargin('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-cost','${pid}-sell');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcMargin(pid){
+  const cost=parseFloat(el(`${pid}-cost`)?.value),sell=parseFloat(el(`${pid}-sell`)?.value);
+  if(isNaN(cost)||isNaN(sell)||cost<=0||sell<=0){err(`${pid}-res`,'Enter valid cost and selling prices.');return;}
+  const diff=sell-cost;
+  const isLoss=diff<0;
+  const isBreakEven=diff===0;
+  const absMargin=(Math.abs(diff)/sell)*100;
+  const absMarkup=(Math.abs(diff)/cost)*100;
+  const icon=isLoss?'📉':(isBreakEven?'➖':'📈');
+  const label=isLoss?'Loss':(isBreakEven?'Break Even':'Profit');
+  const color=isLoss?'#ef4444':(isBreakEven?'var(--text-mute)':'var(--pc,var(--accent))');
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}${icon} ${label}: <strong style="color:${color}">$${fmt(Math.abs(diff),2)}</strong></div>
+    <div style="font-size:.8rem;color:${color};margin-bottom:.5rem;font-weight:600">${isLoss?'⚠️ Selling price is lower than cost price — this is a loss.':isBreakEven?'Selling price equals cost price — no profit or loss.':'✅ Profitable sale.'}</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n" style="color:${color}">$${fmt(Math.abs(diff),2)}</div><div class="stat-l">${label}</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:${color}">${absMargin.toFixed(2)}%</div><div class="stat-l">${isLoss?'Loss':'Profit'} Margin</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:${color}">${absMarkup.toFixed(2)}%</div><div class="stat-l">${isLoss?'Loss':'Profit'} Markup</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(cost,2)}</div><div class="stat-l">Cost Price</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(sell,2)}</div><div class="stat-l">Sell Price</div></div>
+    </div>`);
+}
+
+/* BMI */
+function renderBMI(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-w">Weight</label><input type="number" id="${pid}-w" step=".1" placeholder="70"/></div>
+    <div class="field"><span class="lbl">Unit</span><div class="pill-toggle" style="margin-top:.35rem">
+      <button class="pill-btn active" id="${pid}-wkg" onclick="setPillState('${pid}-wkg','${pid}-wlb')">kg</button>
+      <button class="pill-btn" id="${pid}-wlb" onclick="setPillState('${pid}-wlb','${pid}-wkg')">lbs</button>
+    </div></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-h">Height</label><input type="number" id="${pid}-h" step=".1" placeholder="175"/></div>
+    <div class="field"><span class="lbl">Unit</span><div class="pill-toggle" style="margin-top:.35rem">
+      <button class="pill-btn active" id="${pid}-hcm" onclick="setPillState('${pid}-hcm','${pid}-hin')">cm</button>
+      <button class="pill-btn" id="${pid}-hin" onclick="setPillState('${pid}-hin','${pid}-hcm')">in</button>
+    </div></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcBMIMain('${pid}')">Calculate BMI</button><button class="btn-secondary" onclick="clearF('${pid}-w','${pid}-h');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcBMIMain(pid){
+  const wr=parseFloat(el(`${pid}-w`)?.value),hr=parseFloat(el(`${pid}-h`)?.value);
+  if(!wr||!hr||wr<=0||hr<=0){err(`${pid}-res`,'Enter valid weight and height.');return;}
+  const bmiWu=el(`${pid}-wkg`)?.classList.contains('active')?'kg':'lbs';
+  const bmiHu=el(`${pid}-hcm`)?.classList.contains('active')?'cm':'in';
+  const kg=bmiWu==='lbs'?wr*0.453592:wr,m=bmiHu==='in'?hr*0.0254:hr/100;
+  const bmi=kg/(m*m);
+  let cat,catColor;
+  if(bmi<18.5){cat='Underweight';catColor='#3b82f6';}
+  else if(bmi<25){cat='Normal weight';catColor='#22c55e';}
+  else if(bmi<30){cat='Overweight';catColor='#f59e0b';}
+  else if(bmi<35){cat='Obese (Class I)';catColor='#ef4444';}
+  else if(bmi<40){cat='Obese (Class II)';catColor='#dc2626';}
+  else{cat='Obese (Class III)';catColor='#b91c1c';}
+  // Pin position clamped to valid 2–97% range
+  let pct;
+  if(bmi<18.5)pct=Math.max(2,(bmi/18.5)*24);
+  else if(bmi<25)pct=24+((bmi-18.5)/6.5)*26;
+  else if(bmi<30)pct=50+((bmi-25)/5)*26;
+  else pct=Math.min(97,76+((Math.min(bmi,50)-30)/20)*21);
+  const iL=(18.5*m*m).toFixed(1),iH=(24.9*m*m).toFixed(1);
+  const bmiNote=bmi<10||bmi>70?'<div style="font-size:.78rem;color:#f59e0b;margin-top:.4rem">⚠️ Please verify your inputs — BMI value seems extreme.</div>':'';
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}⚖️ BMI: <strong>${bmi.toFixed(1)}</strong> — <span style="color:${catColor}">${cat}</span></div>
+    <div class="bmi-bar"><div class="bmi-pin" style="left:${pct}%"></div></div>
+    <div class="bmi-scale"><span>&lt;18.5<br/>Under</span><span>18.5–24.9<br/>Normal</span><span>25–29.9<br/>Over</span><span>≥30<br/>Obese</span></div>
+    ${bmiNote}
+    <div class="stat-grid" style="margin-top:.7rem">
+      <div class="stat-cell"><div class="stat-n">${bmi.toFixed(1)}</div><div class="stat-l">BMI</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:${catColor}">${cat.split(' ')[0]}</div><div class="stat-l">Category</div></div>
+      <div class="stat-cell"><div class="stat-n">${iL}–${iH}</div><div class="stat-l">Ideal kg</div></div>
+    </div>`);
+}
+
+/* BMR */
+function renderBMR(pid){
+  return `<div class="field"><span class="lbl">Sex</span><div class="pill-toggle" style="margin-top:.35rem"><button class="pill-btn active" id="${pid}-sm" onclick="setPillState('${pid}-sm','${pid}-sf')">Male</button><button class="pill-btn" id="${pid}-sf" onclick="setPillState('${pid}-sf','${pid}-sm')">Female</button></div></div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-age">Age (years)</label><input type="number" id="${pid}-age" min="1" max="120" placeholder="30"/></div>
+    <div class="field"><label for="${pid}-wt">Weight (kg)</label><input type="number" id="${pid}-wt" step=".1" placeholder="70"/></div>
+  </div>
+  <div class="field"><label for="${pid}-ht">Height (cm)</label><input type="number" id="${pid}-ht" step=".1" placeholder="175"/></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcBMR('${pid}')">Calculate BMR</button><button class="btn-secondary" onclick="clearF('${pid}-age','${pid}-wt','${pid}-ht');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcBMR(pid){
+  const age=parseFloat(el(`${pid}-age`)?.value),wt=parseFloat(el(`${pid}-wt`)?.value),ht=parseFloat(el(`${pid}-ht`)?.value);
+  if(!age||!wt||!ht){err(`${pid}-res`,'Please fill all fields.');return;}
+  if(age<1||age>120){err(`${pid}-res`,'Enter a valid age (1–120 years).');return;}
+  if(wt<10||wt>500){err(`${pid}-res`,'Enter a valid weight (10–500 kg).');return;}
+  if(ht<50||ht>272){err(`${pid}-res`,'Enter a valid height (50–272 cm).');return;}
+  const bmrSex=el(`${pid}-sm`)?.classList.contains('active')?'male':'female';
+  const bmr=bmrSex==='male'?10*wt+6.25*ht-5*age+5:10*wt+6.25*ht-5*age-161;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🔥 BMR: <strong>${Math.round(bmr).toLocaleString()} kcal/day</strong></div>
+    <div style="font-size:.82rem;color:var(--text-soft);margin-top:.4rem">This is the number of calories your body needs at complete rest.</div>
+    <div class="stat-grid" style="margin-top:.65rem">
+      <div class="stat-cell"><div class="stat-n">${Math.round(bmr).toLocaleString()}</div><div class="stat-l">BMR kcal</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(bmr*1.375).toLocaleString()}</div><div class="stat-l">Light Active</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(bmr*1.55).toLocaleString()}</div><div class="stat-l">Moderate</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(bmr*1.725).toLocaleString()}</div><div class="stat-l">Very Active</div></div>
+    </div>`);
+}
+
+/* CALORIE / TDEE */
+function renderCalorie(pid){
+  return `<div class="field"><span class="lbl">Sex</span><div class="pill-toggle" style="margin-top:.35rem"><button class="pill-btn active" id="${pid}-sm" onclick="setPillState('${pid}-sm','${pid}-sf')">Male</button><button class="pill-btn" id="${pid}-sf" onclick="setPillState('${pid}-sf','${pid}-sm')">Female</button></div></div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-age">Age (years)</label><input type="number" id="${pid}-age" placeholder="30"/></div>
+    <div class="field"><label for="${pid}-wt">Weight (kg)</label><input type="number" id="${pid}-wt" step=".1" placeholder="70"/></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-ht">Height (cm)</label><input type="number" id="${pid}-ht" step=".1" placeholder="175"/></div>
+    <div class="field"><label for="${pid}-act">Activity</label><select id="${pid}-act"><option value="1.2">Sedentary</option><option value="1.375">Light (1-3/wk)</option><option value="1.55" selected>Moderate (3-5/wk)</option><option value="1.725">Active (6-7/wk)</option><option value="1.9">Very Active</option></select></div>
+  </div>
+  <div class="field"><label for="${pid}-goal">Goal</label><select id="${pid}-goal"><option value="-500">Lose weight (-500)</option><option value="0" selected>Maintain</option><option value="500">Gain muscle (+500)</option></select></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcCal('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-age','${pid}-wt','${pid}-ht');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcCal(pid){
+  const age=parseFloat(el(`${pid}-age`)?.value),wt=parseFloat(el(`${pid}-wt`)?.value),ht=parseFloat(el(`${pid}-ht`)?.value);
+  if(!age||!wt||!ht){err(`${pid}-res`,'Please fill all fields.');return;}
+  if(age<1||age>120){err(`${pid}-res`,'Enter a valid age (1–120 years).');return;}
+  if(wt<10||wt>500){err(`${pid}-res`,'Enter a valid weight (10–500 kg).');return;}
+  if(ht<50||ht>272){err(`${pid}-res`,'Enter a valid height (50–272 cm).');return;}
+  const act=parseFloat(el(`${pid}-act`).value),goal=parseInt(el(`${pid}-goal`).value);
+  const calSex=el(`${pid}-sm`)?.classList.contains('active')?'male':'female';
+  const bmr=calSex==='male'?10*wt+6.25*ht-5*age+5:10*wt+6.25*ht-5*age-161;
+  const tdee=bmr*act,target=tdee+goal;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🍎 Target: <strong>${Math.round(target).toLocaleString()} kcal/day</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${Math.round(bmr).toLocaleString()}</div><div class="stat-l">BMR</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(tdee).toLocaleString()}</div><div class="stat-l">TDEE</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(target).toLocaleString()}</div><div class="stat-l">Target</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(target*.3/4)}g</div><div class="stat-l">Protein</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(target*.4/4)}g</div><div class="stat-l">Carbs</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(target*.3/9)}g</div><div class="stat-l">Fat</div></div>
+    </div>`);
+}
+
+/* WATER INTAKE */
+function renderWater(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-wt">Weight (kg)</label><input type="number" id="${pid}-wt" step=".1" placeholder="70"/></div>
+    <div class="field"><label for="${pid}-act">Activity Level</label><select id="${pid}-act"><option value="0">Sedentary</option><option value="350" selected>Moderately Active</option><option value="700">Very Active</option></select></div>
+  </div>
+  <div class="field"><label for="${pid}-climate">Climate</label><select id="${pid}-climate"><option value="0">Temperate</option><option value="250">Hot/Humid</option><option value="150">Cold/Dry</option></select></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcWater('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-wt');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcWater(pid){
+  const wt=parseFloat(el(`${pid}-wt`)?.value);
+  if(!wt||wt<=0){err(`${pid}-res`,'Enter your weight.');return;}
+  if(wt<20||wt>300){err(`${pid}-res`,'Please enter a realistic weight between 20–300 kg.');return;}
+  const act=parseInt(el(`${pid}-act`).value),climate=parseInt(el(`${pid}-climate`).value);
+  const base=wt*35;const total=base+act+climate;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}💧 ${(total/1000).toFixed(2)} litres / day</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${(total/1000).toFixed(2)}L</div><div class="stat-l">Daily Target</div></div>
+      <div class="stat-cell"><div class="stat-n">${Math.round(total/250)}</div><div class="stat-l">Glasses (250ml)</div></div>
+      <div class="stat-cell"><div class="stat-n">${(total/1000*4.227).toFixed(1)}</div><div class="stat-l">US Cups</div></div>
+    </div>`);
+}
+
+/* IDEAL WEIGHT */
+function renderIdealWeight(pid){
+  return `<div class="field"><span class="lbl">Sex</span><div class="pill-toggle" style="margin-top:.35rem"><button class="pill-btn active" id="${pid}-sm" onclick="setPillState('${pid}-sm','${pid}-sf')">Male</button><button class="pill-btn" id="${pid}-sf" onclick="setPillState('${pid}-sf','${pid}-sm')">Female</button></div></div>
+  <div class="field"><label for="${pid}-ht">Height (cm)</label><input type="number" id="${pid}-ht" step=".1" placeholder="175"/></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcIdealW('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-ht');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcIdealW(pid){
+  const cm=parseFloat(el(`${pid}-ht`)?.value);
+  if(!cm||cm<100||cm>250){err(`${pid}-res`,'Enter a valid height between 100–250 cm.');return;}
+  const inches=(cm/2.54)-60;
+  const iwSex=el(`${pid}-sm`)?.classList.contains('active')?'male':'female';
+  const m=iwSex==='male';
+  const devine=m?50+2.3*inches:45.5+2.3*inches;
+  const robinson=m?52+1.9*inches:49+1.7*inches;
+  const miller=m?56.2+1.41*inches:53.1+1.36*inches;
+  const hamwi=m?48+2.7*inches:45.4+2.3*inches;
+  const results=[devine,robinson,miller,hamwi];
+  const avg=(devine+robinson+miller+hamwi)/4;
+  const bmiL=18.5*(cm/100)**2,bmiH=24.9*(cm/100)**2;
+  const anyNegative=results.some(r=>r<=0);
+  const warning=anyNegative?`<div style="font-size:.78rem;color:#f59e0b;margin-bottom:.5rem">⚠️ Some formulas are less reliable for heights under 152 cm (5 ft). Use the BMI range as a better reference.</div>`:'';
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🎯 Ideal Weight: <strong>${fmt(avg,1)} kg</strong></div>
+    ${warning}
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${devine>0?fmt(devine,1):'N/A'}</div><div class="stat-l">Devine</div></div>
+      <div class="stat-cell"><div class="stat-n">${robinson>0?fmt(robinson,1):'N/A'}</div><div class="stat-l">Robinson</div></div>
+      <div class="stat-cell"><div class="stat-n">${miller>0?fmt(miller,1):'N/A'}</div><div class="stat-l">Miller</div></div>
+      <div class="stat-cell"><div class="stat-n">${hamwi>0?fmt(hamwi,1):'N/A'}</div><div class="stat-l">Hamwi</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(bmiL,1)}–${fmt(bmiH,1)}</div><div class="stat-l">BMI Range kg</div></div>
+    </div>`);
+}
+
+/* LOAN EMI */
+function renderLoanEMI(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-p">Loan Amount ($)</label><input type="number" id="${pid}-p" step="100" placeholder="200000"/></div>
+    <div class="field"><label for="${pid}-r">Annual Rate (%)</label><input type="number" id="${pid}-r" step=".01" placeholder="7.5"/></div>
+  </div>
+  <div class="field"><label for="${pid}-n">Term: <span id="${pid}-tv">10 years</span></label><input type="range" id="${pid}-n" min="1" max="30" value="10" oninput="el('${pid}-tv').textContent=this.value+' year'+(this.value>1?'s':'')"/></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcEMI('${pid}')">Calculate EMI</button><button class="btn-secondary" onclick="clearF('${pid}-p','${pid}-r');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcEMI(pid){
+  const P=parseFloat(el(`${pid}-p`)?.value),r=parseFloat(el(`${pid}-r`)?.value),yrs=parseInt(el(`${pid}-n`).value);
+  if(!P||P<=0){err(`${pid}-res`,'Enter a valid loan amount.');return;}
+  if(isNaN(r)||r<0){err(`${pid}-res`,'Interest rate cannot be negative.');return;}
+  if(r>100){err(`${pid}-res`,'Interest rate seems too high. Please enter annual rate as a percentage (e.g. 7.5 for 7.5%).');return;}
+  const n=yrs*12;
+  let emi,tot,interest;
+  if(r===0){emi=P/n;tot=P;interest=0;}
+  else{const mr=r/100/12;emi=P*mr*Math.pow(1+mr,n)/(Math.pow(1+mr,n)-1);tot=emi*n;interest=tot-P;}
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🏦 Monthly EMI: <strong>$${fmt(emi)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(emi)}</div><div class="stat-l">Monthly EMI</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(interest)}</div><div class="stat-l">Total Interest</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(tot)}</div><div class="stat-l">Total Payable</div></div>
+      <div class="stat-cell"><div class="stat-n">${yrs} yr</div><div class="stat-l">Loan Term</div></div>
+    </div>`);
+}
+
+/* SIMPLE INTEREST */
+function renderSimpleInterest(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-p">Principal ($)</label><input type="number" id="${pid}-p" placeholder="10000"/></div>
+    <div class="field"><label for="${pid}-r">Annual Rate (%)</label><input type="number" id="${pid}-r" step=".01" placeholder="5"/></div>
+  </div>
+  <div class="field"><label for="${pid}-t">Time (years)</label><input type="number" id="${pid}-t" step=".5" placeholder="3"/></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcSI('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-p','${pid}-r','${pid}-t');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcSI(pid){
+  const P=parseFloat(el(`${pid}-p`)?.value),r=parseFloat(el(`${pid}-r`)?.value),t=parseFloat(el(`${pid}-t`)?.value);
+  if(!P||isNaN(r)||!t){err(`${pid}-res`,'Fill all fields with valid numbers.');return;}
+  if(P<=0){err(`${pid}-res`,'Principal must be positive.');return;}
+  if(r<0){err(`${pid}-res`,'Interest rate cannot be negative.');return;}
+  if(t<=0){err(`${pid}-res`,'Time must be positive.');return;}
+  const si=(P*r*t)/100,total=P+si;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}💵 Total: <strong>$${fmt(total)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(si)}</div><div class="stat-l">Interest (SI)</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(total)}</div><div class="stat-l">Total Amount</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(P)}</div><div class="stat-l">Principal</div></div>
+    </div>
+    <div style="font-size:.78rem;color:var(--text-soft);margin-top:.4rem">SI = (${fmt(P)} × ${r}% × ${t}) / 100 = $${fmt(si)}</div>`);
+}
+
+/* COMPOUND INTEREST */
+function renderCompound(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-p">Principal ($)</label><input type="number" id="${pid}-p" placeholder="10000"/></div>
+    <div class="field"><label for="${pid}-r">Annual Rate (%)</label><input type="number" id="${pid}-r" step=".01" placeholder="8"/></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-t">Years</label><input type="number" id="${pid}-t" placeholder="10"/></div>
+    <div class="field"><label for="${pid}-mc">Monthly Contribution ($)</label><input type="number" id="${pid}-mc" placeholder="500"/></div>
+  </div>
+  <div class="field"><label for="${pid}-freq">Compounding</label><select id="${pid}-freq"><option value="1">Annually</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option><option value="365">Daily</option></select></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcCI('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-p','${pid}-r','${pid}-t','${pid}-mc');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcCI(pid){
+  const P=parseFloat(el(`${pid}-p`)?.value)||0,r=parseFloat(el(`${pid}-r`)?.value),t=parseFloat(el(`${pid}-t`)?.value),mc=parseFloat(el(`${pid}-mc`)?.value)||0;
+  if(isNaN(r)||r<0){err(`${pid}-res`,'Enter a valid interest rate (0 or more).');return;}
+  if(!t||t<=0){err(`${pid}-res`,'Enter a valid number of years.');return;}
+  if(P<0){err(`${pid}-res`,'Principal cannot be negative.');return;}
+  if(mc<0){err(`${pid}-res`,'Monthly contribution cannot be negative.');return;}
+  const n=parseFloat(el(`${pid}-freq`).value),rate=r/100/n,periods=n*t;
+  const fv=rate===0?P+mc*12*t:P*Math.pow(1+rate,periods)+mc*(Math.pow(1+rate,periods)-1)/rate*(n/12);
+  const contrib=P+mc*12*t,interest=fv-contrib;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}📈 Future Value: <strong>$${fmt(fv,2)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(fv,0)}</div><div class="stat-l">Future Value</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(interest,0)}</div><div class="stat-l">Interest Earned</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(contrib,0)}</div><div class="stat-l">Contributed</div></div>
+    </div>`);
+}
+
+/* SALARY */
+function renderSalary(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-amt">Salary Amount ($)</label><input type="number" id="${pid}-amt" step="any" placeholder="60000"/></div>
+    <div class="field"><label for="${pid}-per">Per</label><select id="${pid}-per"><option value="annual">Year (Annual)</option><option value="monthly">Month</option><option value="weekly">Week</option><option value="hourly">Hour</option></select></div>
+  </div>
+  <div class="field"><label for="${pid}-hrs">Hours per Week</label><input type="number" id="${pid}-hrs" value="40" min="1" max="168"/></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcSalary('${pid}')">Convert</button><button class="btn-secondary" onclick="clearF('${pid}-amt');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcSalary(pid){
+  const amt=parseFloat(el(`${pid}-amt`)?.value),per=el(`${pid}-per`).value,hrs=parseFloat(el(`${pid}-hrs`).value)||40;
+  if(!amt||amt<=0){err(`${pid}-res`,'Enter salary amount.');return;}
+  let annual;
+  switch(per){case'annual':annual=amt;break;case'monthly':annual=amt*12;break;case'weekly':annual=amt*52;break;case'hourly':annual=amt*hrs*52;break;}
+  const monthly=annual/12,weekly=annual/52,daily=annual/260,hourly=annual/(52*hrs);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}💼 Annual: <strong>$${fmt(annual,0)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(annual,0)}</div><div class="stat-l">Annual</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(monthly,2)}</div><div class="stat-l">Monthly</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(weekly,2)}</div><div class="stat-l">Weekly</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(daily,2)}</div><div class="stat-l">Daily</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(hourly,2)}</div><div class="stat-l">Hourly</div></div>
+    </div>`);
+}
+
+/* SAVINGS */
+function renderSavings(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-p">Initial Savings ($)</label><input type="number" id="${pid}-p" step="100" placeholder="5000"/></div>
+    <div class="field"><label for="${pid}-mc">Monthly Contribution ($)</label><input type="number" id="${pid}-mc" step="10" placeholder="500"/></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-r">Annual Rate (%)</label><input type="number" id="${pid}-r" step=".1" placeholder="4.5"/></div>
+    <div class="field"><label for="${pid}-t">Years</label><input type="number" id="${pid}-t" placeholder="10"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcSavings('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-p','${pid}-mc','${pid}-r','${pid}-t');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcSavings(pid){ calcSavingsDedicated(pid); }
+function calcSavingsDedicated(pid){
+  const P=parseFloat(document.getElementById(pid+'-p')?.value)||0;
+  const r=parseFloat(document.getElementById(pid+'-r')?.value);
+  const t=parseFloat(document.getElementById(pid+'-t')?.value);
+  const mc=parseFloat(document.getElementById(pid+'-mc')?.value)||0;
+  if(isNaN(r)||r<0){err(pid+'-res','Enter a valid interest rate (0 or more).');return;}
+  if(!t||t<=0){err(pid+'-res','Enter a valid number of years.');return;}
+  if(P<0){err(pid+'-res','Initial savings cannot be negative.');return;}
+  if(mc<0){err(pid+'-res','Monthly contribution cannot be negative.');return;}
+  const n=12,rate=r/100/n,periods=n*t;
+  const fv=rate===0?(P+mc*12*t):P*Math.pow(1+rate,periods)+mc*(Math.pow(1+rate,periods)-1)/rate;
+  const contrib=P+mc*12*t,interest=Math.max(0,fv-contrib);
+  showRes(pid+'-res','<div class="result-title">'+copyBtn(pid+'-res')+'\uD83C\uDFE6 Total Savings: <strong>$'+fmt(fv,2)+'</strong></div><div class="stat-grid"><div class="stat-cell"><div class="stat-n">$'+fmt(fv,0)+'</div><div class="stat-l">Total Saved</div></div><div class="stat-cell"><div class="stat-n">$'+fmt(interest,0)+'</div><div class="stat-l">Interest Earned</div></div><div class="stat-cell"><div class="stat-n">$'+fmt(contrib,0)+'</div><div class="stat-l">Deposited</div></div></div>');
+}
+
+/* TIME DURATION */
+function renderTimeDuration(pid){
+  return `<div id="${pid}-entries" style="display:flex;flex-direction:column;gap:.5rem">
+    <div class="field-row trio"><div class="field"><label>Hours</label><input type="number" class="${pid}-h" min="0" placeholder="2"/></div><div class="field"><label>Minutes</label><input type="number" class="${pid}-m" min="0" max="59" placeholder="30"/></div><div class="field"><label>Seconds</label><input type="number" class="${pid}-s" min="0" max="59" placeholder="0"/></div></div>
+    <div class="field-row trio"><div class="field"><input type="number" class="${pid}-h" min="0" placeholder="1"/></div><div class="field"><input type="number" class="${pid}-m" min="0" max="59" placeholder="45"/></div><div class="field"><input type="number" class="${pid}-s" min="0" max="59" placeholder="0"/></div></div>
+  </div>
+  <div class="btn-row"><button class="btn-icon" onclick="addTimeRow('${pid}')">+ Add Row</button><button class="btn-primary" onclick="calcTimeDur('${pid}')">Calculate Total</button><button class="btn-secondary" onclick="el('${pid}-res').className='result'">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function addTimeRow(pid){
+  const c=el(`${pid}-entries`);
+  const d=document.createElement('div');d.className='field-row trio';
+  d.innerHTML=`<div class="field"><input type="number" class="${pid}-h" min="0" placeholder="0"/></div><div class="field"><input type="number" class="${pid}-m" min="0" max="59" placeholder="0"/></div><div class="field"><input type="number" class="${pid}-s" min="0" max="59" placeholder="0"/></div>`;
+  c.appendChild(d);
+}
+function calcTimeDur(pid){
+  let total=0;
+  document.querySelectorAll(`.${pid}-h`).forEach((h,i)=>{
+    const m=document.querySelectorAll(`.${pid}-m`)[i],s=document.querySelectorAll(`.${pid}-s`)[i];
+    total+=(parseFloat(h.value)||0)*3600+(parseFloat(m?.value)||0)*60+(parseFloat(s?.value)||0);
+  });
+  const h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=Math.floor(total%60);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}⏱️ Total: <strong>${h}h ${m}m ${s}s</strong></div>
+    <div class="stat-grid"><div class="stat-cell"><div class="stat-n">${h}</div><div class="stat-l">Hours</div></div><div class="stat-cell"><div class="stat-n">${m}</div><div class="stat-l">Minutes</div></div><div class="stat-cell"><div class="stat-n">${s}</div><div class="stat-l">Seconds</div></div><div class="stat-cell"><div class="stat-n">${fmt(total/3600,2)}</div><div class="stat-l">Decimal Hrs</div></div></div>`);
+}
+
+/* TIME DIFFERENCE */
+function renderTimeDiff(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-s">Start Time</label><input type="time" id="${pid}-s"/></div>
+    <div class="field"><label for="${pid}-e">End Time</label><input type="time" id="${pid}-e"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcTimeDiff('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-s','${pid}-e');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcTimeDiff(pid){
+  const sv=el(`${pid}-s`).value,ev=el(`${pid}-e`).value;
+  if(!sv||!ev){err(`${pid}-res`,'Select both times.');return;}
+  const [sh,sm]=sv.split(':').map(Number),[eh,em]=ev.split(':').map(Number);
+  let diff=(eh*60+em)-(sh*60+sm);
+  if(diff<0)diff+=1440;
+  const h=Math.floor(diff/60),m=diff%60;
+  const sameNote=diff===0?'<div style="font-size:.78rem;color:var(--text-mute);margin-bottom:.4rem">ℹ️ Start and end times are the same — zero elapsed time.</div>':'';
+  const crossNote=diff>0&&(eh*60+em)<(sh*60+sm)?'<div style="font-size:.78rem;color:#3b82f6;margin-bottom:.4rem">ℹ️ End time is before start time — calculated as crossing midnight.</div>':'';
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🕐 Difference: <strong>${h}h ${m}m</strong></div>
+    ${sameNote}${crossNote}
+    <div class="stat-grid"><div class="stat-cell"><div class="stat-n">${h}</div><div class="stat-l">Hours</div></div><div class="stat-cell"><div class="stat-n">${m}</div><div class="stat-l">Minutes</div></div><div class="stat-cell"><div class="stat-n">${diff}</div><div class="stat-l">Total Minutes</div></div><div class="stat-cell"><div class="stat-n">${fmt(diff/60,2)}</div><div class="stat-l">Decimal Hrs</div></div></div>`);
+}
+
+/* OVERTIME */
+function renderOvertime(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-hrs">Hours Worked (week)</label><input type="number" id="${pid}-hrs" step=".5" placeholder="50"/></div>
+    <div class="field"><label for="${pid}-rate">Hourly Rate ($)</label><input type="number" id="${pid}-rate" step=".01" placeholder="20"/></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-std">Standard Hours/Week</label><input type="number" id="${pid}-std" value="40" placeholder="40"/></div>
+    <div class="field"><label for="${pid}-mult">Overtime Multiplier</label><select id="${pid}-mult"><option value="1.5" selected>1.5x (Time & Half)</option><option value="2">2x (Double Time)</option></select></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcOT('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-hrs','${pid}-rate');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcOT(pid){
+  const hrs=parseFloat(el(`${pid}-hrs`)?.value),rate=parseFloat(el(`${pid}-rate`)?.value),std=parseFloat(el(`${pid}-std`).value)||40,mult=parseFloat(el(`${pid}-mult`).value);
+  if(!hrs||!rate){err(`${pid}-res`,'Enter hours worked and hourly rate.');return;}
+  if(hrs<=0){err(`${pid}-res`,'Hours worked must be greater than zero.');return;}
+  if(rate<=0){err(`${pid}-res`,'Hourly rate must be greater than zero.');return;}
+  const regHrs=Math.min(hrs,std),otHrs=Math.max(0,hrs-std);
+  const regPay=regHrs*rate,otPay=otHrs*rate*mult,total=regPay+otPay;
+  const otNote=otHrs===0?`<div style="font-size:.78rem;color:var(--text-mute);margin-bottom:.4rem">ℹ️ No overtime — hours worked (${hrs}) do not exceed the standard ${std}-hour week.</div>`:'';
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}⏰ Total Pay: <strong>$${fmt(total,2)}</strong></div>
+    ${otNote}
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${regHrs}</div><div class="stat-l">Regular Hrs</div></div>
+      <div class="stat-cell"><div class="stat-n">${otHrs}</div><div class="stat-l">OT Hrs</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(regPay,2)}</div><div class="stat-l">Regular Pay</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:${otHrs>0?'var(--pc,var(--accent))':'var(--text-mute)'}">$${fmt(otPay,2)}</div><div class="stat-l">OT Pay</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(total,2)}</div><div class="stat-l">Total Pay</div></div>
+    </div>`);
+}
+
+/* UNIT CONVERTER (generic) */
+function renderUnitConv(cat,fromUnit,toUnit){
+  return function(pid){
+    return `<div class="field"><label for="${pid}-val">Value (${fromUnit})</label><input type="number" id="${pid}-val" step="any" placeholder="Enter value"/></div>
+    <div class="hint">${fromUnit} → ${toUnit}</div>
+    <div class="btn-row"><button class="btn-primary" onclick="calcUnitConv('${pid}','${cat}','${fromUnit}','${toUnit}')">Convert</button><button class="btn-secondary" onclick="clearF('${pid}-val');hideRes('${pid}-res')">Reset</button></div>
+    <div id="${pid}-res" class="result"></div>`;
+  };
+}
+function calcUnitConv(pid,cat,from,to){
+  const val=parseFloat(el(`${pid}-val`)?.value);
+  if(isNaN(val)){err(`${pid}-res`,'Enter a valid number.');return;}
+  let res;
+  if(cat==='temp'){
+    const f=UNITS.temp[from],t=UNITS.temp[to];
+    if(f==='C'&&t==='F')res=val*9/5+32;
+    else if(f==='F'&&t==='C')res=(val-32)*5/9;
+    else if(f==='C'&&t==='K')res=val+273.15;
+    else if(f==='K'&&t==='C')res=val-273.15;
+    else if(f==='F'&&t==='K')res=(val-32)*5/9+273.15;
+    else if(f==='K'&&t==='F')res=(val-273.15)*9/5+32;
+    else res=val;
+  } else {
+    res=val*UNITS[cat][from]/UNITS[cat][to];
+  }
+  const d=Math.abs(res)<0.0001||Math.abs(res)>1e9?res.toExponential(5):fmtN(res);
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}${fmtN(val)} ${from} = <strong>${d} ${to}</strong></div>`);
+}
+
+/* TEMPERATURE CONVERTER */
+function renderTempConv(fromUnit,toUnit){
+  return function(pid){
+    return `<div class="field"><label for="${pid}-val">Temperature (°${fromUnit[0]})</label><input type="number" id="${pid}-val" step="any" placeholder="Enter temperature"/></div>
+    <div class="btn-row"><button class="btn-primary" onclick="calcUnitConv('${pid}','temp','${fromUnit}','${toUnit}')">Convert</button><button class="btn-secondary" onclick="clearF('${pid}-val');hideRes('${pid}-res')">Reset</button></div>
+    <div id="${pid}-res" class="result"></div>`;
+  };
+}
+
+/* AVERAGE */
+function renderAverage(pid){
+  return `<div class="field"><label for="${pid}-data">Numbers (comma or space separated)</label><textarea id="${pid}-data" placeholder="e.g. 10, 25, 30, 45, 50" style="min-height:60px"></textarea></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcAvg('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-data');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcAvg(pid){
+  const raw=el(`${pid}-data`)?.value.trim();
+  if(!raw){err(`${pid}-res`,'Enter some numbers.');return;}
+  const nums=raw.split(/[\s,;]+/).map(Number).filter(n=>!isNaN(n));
+  if(nums.length<2){err(`${pid}-res`,'Enter at least 2 numbers.');return;}
+  const sum=nums.reduce((a,b)=>a+b,0),mean=sum/nums.length;
+  const sorted=[...nums].sort((a,b)=>a-b);
+  const med=nums.length%2===0?(sorted[nums.length/2-1]+sorted[nums.length/2])/2:sorted[Math.floor(nums.length/2)];
+  const freq={};nums.forEach(n=>freq[n]=(freq[n]||0)+1);
+  const maxF=Math.max(...Object.values(freq));
+  const mode=Object.keys(freq).filter(k=>freq[k]===maxF).join(', ');
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}📊 Mean: <strong>${fmt(mean,4)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">${fmt(mean,4)}</div><div class="stat-l">Mean</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(med,4)}</div><div class="stat-l">Median</div></div>
+      <div class="stat-cell"><div class="stat-n">${mode}</div><div class="stat-l">Mode</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(sorted[sorted.length-1]-sorted[0],4)}</div><div class="stat-l">Range</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(sum,2)}</div><div class="stat-l">Sum</div></div>
+      <div class="stat-cell"><div class="stat-n">${nums.length}</div><div class="stat-l">Count</div></div>
+    </div>`);
+}
+
+/* TIP */
+function renderTip(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-bill">Bill Amount ($)</label><input type="number" id="${pid}-bill" step=".01" placeholder="85.50"/></div>
+    <div class="field"><label for="${pid}-tip">Tip (%)</label><input type="number" id="${pid}-tip" step="1" value="18" placeholder="18"/></div>
+  </div>
+  <div class="field"><label for="${pid}-split">Split Between (people)</label><input type="number" id="${pid}-split" min="1" value="1" placeholder="1"/></div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcTip('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-bill');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcTip(pid){
+  const bill=parseFloat(el(`${pid}-bill`)?.value),tip=parseFloat(el(`${pid}-tip`).value)||18,split=parseInt(el(`${pid}-split`).value)||1;
+  if(!bill||bill<=0){err(`${pid}-res`,'Enter a valid bill amount.');return;}
+  const tipAmt=bill*(tip/100),total=bill+tipAmt,perPerson=total/split;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🍽️ Total: <strong>$${fmt(total,2)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(tipAmt,2)}</div><div class="stat-l">Tip Amount</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(total,2)}</div><div class="stat-l">Total Bill</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(perPerson,2)}</div><div class="stat-l">Per Person</div></div>
+    </div>`);
+}
+
+/* FUEL COST */
+function renderFuelCost(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-dist">Distance (km)</label><input type="number" id="${pid}-dist" step="1" placeholder="500"/></div>
+    <div class="field"><label for="${pid}-eff">Fuel Efficiency</label><input type="number" id="${pid}-eff" step=".1" placeholder="7"/></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-effunit">Efficiency Unit</label><select id="${pid}-effunit"><option value="l100" selected>L/100km</option><option value="kmpl">km/L</option><option value="mpg">mpg</option></select></div>
+    <div class="field"><label for="${pid}-price">Fuel Price ($/L)</label><input type="number" id="${pid}-price" step=".001" placeholder="1.80"/></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcFuel('${pid}')">Calculate</button><button class="btn-secondary" onclick="clearF('${pid}-dist','${pid}-eff','${pid}-price');hideRes('${pid}-res')">Reset</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcFuel(pid){
+  const dist=parseFloat(el(`${pid}-dist`)?.value),eff=parseFloat(el(`${pid}-eff`)?.value),price=parseFloat(el(`${pid}-price`)?.value);
+  if(!dist||!eff||!price){err(`${pid}-res`,'Fill all fields.');return;}
+  const unit=el(`${pid}-effunit`).value;
+  let liters;
+  if(unit==='l100')liters=dist*(eff/100);
+  else if(unit==='kmpl')liters=dist/eff;
+  else liters=dist*1.60934/(eff*4.54609);
+  const cost=liters*price;
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}⛽ Fuel Cost: <strong>$${fmt(cost,2)}</strong></div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-n">$${fmt(cost,2)}</div><div class="stat-l">Total Cost</div></div>
+      <div class="stat-cell"><div class="stat-n">${fmt(liters,1)}L</div><div class="stat-l">Fuel Needed</div></div>
+      <div class="stat-cell"><div class="stat-n">$${fmt(cost/dist*100,2)}</div><div class="stat-l">Per 100km</div></div>
+    </div>`);
+}
+
+/* RANDOM NUMBER */
+function renderRandom(pid){
+  return `<div class="field-row">
+    <div class="field"><label for="${pid}-min">Minimum</label><input type="number" id="${pid}-min" value="1" placeholder="1"/></div>
+    <div class="field"><label for="${pid}-max">Maximum</label><input type="number" id="${pid}-max" value="100" placeholder="100"/></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label for="${pid}-count">How Many Numbers</label><input type="number" id="${pid}-count" value="1" min="1" max="20" placeholder="1"/></div>
+    <div class="field"><label for="${pid}-type">Type</label><select id="${pid}-type"><option value="int" selected>Integer</option><option value="dec">Decimal</option></select></div>
+  </div>
+  <div class="btn-row"><button class="btn-primary" onclick="calcRandom('${pid}')">🎲 Generate</button><button class="btn-secondary" onclick="hideRes('${pid}-res')">Clear</button></div>
+  <div id="${pid}-res" class="result"></div>`;
+}
+function calcRandom(pid){
+  const min=parseFloat(el(`${pid}-min`).value),max=parseFloat(el(`${pid}-max`).value),count=Math.min(20,Math.max(1,parseInt(el(`${pid}-count`).value)||1)),type=el(`${pid}-type`).value;
+  if(min>=max){err(`${pid}-res`,'Maximum must be greater than minimum.');return;}
+  const arr=crypto.getRandomValues(new Uint32Array(count));
+  const nums=Array.from(arr).map(v=>{
+    const r=min+(v/(0xFFFFFFFF))*(max-min);
+    return type==='int'?Math.floor(r):parseFloat(r.toFixed(4));
+  });
+  showRes(`${pid}-res`,`<div class="result-title">${copyBtn(`${pid}-res`)}🎲 ${count===1?nums[0]:'Random Numbers'}</div>
+    ${count===1?'':`<div style="font-family:var(--ff-mono);font-size:.9rem;margin-top:.5rem;line-height:2">${nums.join(', ')}</div>`}`);
+}
+
+/* ═══ PAGE ROUTER ═════════════════════════════════════════════ */
+const calcMap={};
+CALCS.forEach(c=>{ calcMap[c.id]=c; calcMap[c.slug]=c; });
+
+function goTo(id){
+  const newHash=id==='home'?location.pathname:(location.pathname+'#'+id);
+  history.pushState({id},'',(id==='home'?location.pathname:location.pathname+'#'+id));
+  render(id);
+  closeSidebar();
+}
+
+function render(id){
+  // Stop any running countdown when navigating
+  if(cdInterval){ clearInterval(cdInterval); cdInterval=null; }
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('active'));
+
+  if(id==='home'||!calcMap[id]){
+    const hp=el('page-home'); hp.classList.add('active'); hp.style.display='block';
+    el('bc-s1').style.display=el('bc-cat').style.display=el('bc-s2').style.display=el('bc-page').style.display='none';
+    updateMeta({title:'Free Online Calculators — Calc Toolkit',desc:'Free online calculators for age, percentage, BMI, finance, unit conversion, and more.',slug:'',keywords:''});
+    return;
+  }
+
+  const calc=calcMap[id];
+  const pageId='calcpage-'+calc.id;
+  let page=el(pageId);
+  if(!page){
+    page=document.createElement('div');
+    page.id=pageId; page.className='page calc-page';
+    page.innerHTML=buildCalcPage(calc);
+    el('calc-pages').appendChild(page);
+    // Init mode for pct
+    if(calc.id==='percentage-calculator'||calc.slug==='percentage-calculator'){
+      setTimeout(()=>{
+        pctModeState[pageId]='basic';
+        setPctM(pageId,'basic',el(`${pageId}-m1`));
+      },0);
+    }
+  }
+  page.classList.add('active'); page.style.display='block';
+
+  // Breadcrumb
+  const cat=CATS[calc.cat];
+  el('bc-s1').style.display=el('bc-cat').style.display=el('bc-s2').style.display=el('bc-page').style.display='';
+  el('bc-cat').textContent=cat.icon+' '+cat.label;
+  el('bc-cat').style.color=cat.color;
+  el('bc-cat').onclick=()=>goTo('home');
+  el('bc-page').textContent=calc.title;
+
+  // Sidebar active
+  const sbBtn=document.querySelector(`[data-cid="${calc.id}"]`);
+  if(sbBtn)sbBtn.classList.add('active');
+
+  // Meta
+  updateMeta({title:calc.h1+' — Calc Toolkit',desc:calc.desc,slug:calc.slug,keywords:calc.keywords});
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildCalcPage(calc){
+  const cat=CATS[calc.cat];
+  const pid='calcpage-'+calc.id;
+
+  // Resolve render function — handle both direct functions and closures (unit/temp converters)
+  let renderFn=calc.render;
+  // If it's a zero-arg function returning another function (unit converter closures), unwrap it
+  if(typeof renderFn==='function'){
+    try {
+      const test=renderFn();
+      if(typeof test==='function') renderFn=test;
+    } catch(e){ /* renderFn takes args, use as-is */ }
+  }
+  const toolHTML=typeof renderFn==='function'?renderFn(pid):`<p style="color:var(--text-mute)">Calculator coming soon.</p>`;
+
+  const faqHTML=calc.faqs?calc.faqs.map((f,i)=>`
+    <div class="faq-item" id="${pid}-faq${i}">
+      <button class="faq-q" onclick="toggleFAQ('${pid}-faq${i}')" aria-expanded="false">
+        ${f.q}<span class="faq-arrow" aria-hidden="true">▼</span>
+      </button>
+      <div class="faq-a">${f.a}</div>
+    </div>`).join(''):'';
+
+  const tagsHTML=(calc.tags||[]).map(t=>`<span class="meta-tag">${t}</span>`).join('');
+
+  const relatedHTML = getRelatedHTML(calc.id);
+
+  return `
+    <div class="calc-hero" style="--pc:${cat.color}">
+      <h1>${calc.h1}</h1>
+      <p class="desc">${calc.desc}</p>
+      <div class="meta-tags">${tagsHTML}</div>
+    </div>
+
+    <div class="card" style="--pc:${cat.color}">
+      <div class="card-stripe"></div>
+      <div class="card-head">
+        <div class="card-icon" aria-hidden="true">${calc.icon}</div>
+        <div class="card-info"><h2>${calc.title}</h2><p>${calc.desc.substring(0,80)}…</p></div>
+      </div>
+      <div class="card-body" style="--pc:${cat.color}">${toolHTML}</div>
+    </div>
+
+    ${relatedHTML}
+
+    <div class="share-bar">
+      <div class="share-bar-inner">
+        <div class="share-bar-left">
+          <span class="share-bar-icon">🔗</span>
+          <span class="share-bar-text">Share this calculator</span>
+        </div>
+        <button class="share-bar-btn" onclick="copyShareLink(this)">Copy Link</button>
+      </div>
+    </div>
+
+    ${faqHTML?`<section class="faq-section" aria-labelledby="${pid}-faqtitle">
+      <h2 class="faq-title" id="${pid}-faqtitle">Frequently Asked Questions</h2>
+      ${faqHTML}
+    </section>`:''}`;
+}
+
+function toggleFAQ(id){
+  const item=el(id);
+  const isOpen=item.classList.toggle('open');
+  item.querySelector('.faq-q').setAttribute('aria-expanded',isOpen);
+}
+
+/* ═══ SIDEBAR BUILD ════════════════════════════════════════════ */
+(function buildSidebar(){
+  const nav=el('sb-nav');
+  const homeBtn=document.createElement('button');
+  homeBtn.className='sb-btn'; homeBtn.id='sb-home';
+  homeBtn.setAttribute('data-search','home overview all calculators');
+  homeBtn.innerHTML='<span class="sb-icon" style="background:var(--surface2)">🏠</span>All Calculators';
+  homeBtn.style.cssText='--nav-c:var(--accent)';
+  homeBtn.onclick=()=>goTo('home');
+  nav.appendChild(homeBtn);
+
+  const groups={};
+  CALCS.forEach(c=>{
+    if(!groups[c.cat])groups[c.cat]=[];
+    groups[c.cat].push(c);
+  });
+
+  Object.entries(CATS).forEach(([key,cat])=>{
+    if(!groups[key])return;
+    const grp=document.createElement('div');
+    grp.className='sb-group';
+    grp.innerHTML=`<div class="sb-cat-header" style="--cat-color:${cat.color}" role="button" tabindex="0" aria-expanded="true">
+      <span class="sb-cat-dot"></span>
+      <span style="flex:1">${cat.label}</span>
+      <span class="sb-cat-count" style="--cat-color:${cat.color}">${groups[key].length}</span>
+      <span class="sb-cat-arrow" aria-hidden="true"><svg viewBox="0 0 10 10"><polyline points="2,3 5,7 8,3"/></svg></span>
+    </div>
+    <div class="sb-tools">
+      ${groups[key].map(c=>`<button class="sb-btn" data-cid="${c.id}" style="--nav-c:${cat.color}" data-search="${c.title.toLowerCase()} ${c.id} ${key}" onclick="goTo('${c.id}')"><span class="sb-icon">${c.icon}</span>${c.title}</button>`).join('')}
+    </div>`;
+    grp.querySelector('.sb-cat-header').addEventListener('click',()=>{
+      grp.classList.toggle('collapsed');
+      grp.querySelector('.sb-cat-header').setAttribute('aria-expanded',!grp.classList.contains('collapsed'));
+    });
+    grp.querySelector('.sb-cat-header').addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();grp.querySelector('.sb-cat-header').click();}
+    });
+    nav.appendChild(grp);
+  });
+})();
+
+/* ═══ HOME GRID BUILD ══════════════════════════════════════════ */
+(function buildHomeGrid(){
+  const grid=el('home-grid');
+  const groups={};
+  CALCS.forEach(c=>{ if(!groups[c.cat])groups[c.cat]=[]; groups[c.cat].push(c); });
+  Object.entries(CATS).forEach(([key,cat])=>{
+    if(!groups[key])return;
+    const block=document.createElement('div');
+    block.className='cat-block'; block.style.cssText=`--cc:${cat.color}`;
+    block.innerHTML=`<div class="cat-block-title">${cat.icon} ${cat.label} <span style="font-size:.58rem;opacity:.7;font-weight:500">${groups[key].length} tools</span></div>
+      <div class="cat-block-links">${groups[key].map(c=>`<button class="cat-link" onclick="goTo('${c.id}')">${c.icon} ${c.title}</button>`).join('')}</div>`;
+    grid.appendChild(block);
+  });
+})();
+
+/* ═══ SEARCH ══════════════════════════════════════════════════ */
+let searchTm;
+function searchCalcs(q){
+  clearTimeout(searchTm);
+  searchTm=setTimeout(()=>{
+    q=q.toLowerCase().trim();
+    document.querySelectorAll('.sb-btn[data-cid]').forEach(b=>{
+      b.style.display=(!q||b.getAttribute('data-search').includes(q))?'':'none';
+    });
+    document.querySelectorAll('.sb-cat-header').forEach(h=>{
+      const tools=h.nextElementSibling;
+      if(!tools)return;
+      const any=[...tools.querySelectorAll('.sb-btn')].some(b=>b.style.display!=='none');
+      h.parentElement.style.display=(any||!q)?'':'none';
+    });
+  },150);
+}
+
+/* ═══ META UPDATER ════════════════════════════════════════════ */
+function updateMeta({title,desc,slug,keywords}){
+  document.title=title;
+  el('page-title').textContent=title;
+  el('page-desc').setAttribute('content',desc);
+  const url='https://calculatortoolkit.com/'+(slug||'');
+  el('page-canonical').setAttribute('href',url);
+  el('og-title').setAttribute('content',title);
+  el('og-desc').setAttribute('content',desc);
+  el('og-url').setAttribute('content',url);
+  el('tw-title').setAttribute('content',title);
+  el('tw-desc').setAttribute('content',desc);
+  if(slug){
+    el('page-schema').textContent=JSON.stringify({
+      "@context":"https://schema.org","@type":"WebApplication",
+      "name":title,"description":desc,"url":url,
+      "applicationCategory":"Utility","operatingSystem":"Any",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+    });
+  }
+}
+
+/* ═══ ROUTER ══════════════════════════════════════════════════ */
+window.addEventListener('popstate',e=>{
+  const id=e.state?.id||location.hash.replace('#','')||'home';
+  render(id);
+});
+window.addEventListener('load',()=>{
+  const id=location.hash.replace('#','')||'home';
+  render(id);
+});
+
+/* ═══ THEME ══════════════════════════════════════════════════ */
+(function(){
+  const t=localStorage.getItem('ct-theme')||'light';
+  document.documentElement.setAttribute('data-theme',t);
+  el('theme-btn').textContent=t==='light'?'🌙':'☀️';
+})();
+function toggleTheme(){
+  const h=document.documentElement,isL=h.getAttribute('data-theme')==='light',n=isL?'dark':'light';
+  h.setAttribute('data-theme',n);localStorage.setItem('ct-theme',n);
+  el('theme-btn').textContent=n==='light'?'🌙':'☀️';
+}
+
+/* ═══ SIDEBAR MOBILE ══════════════════════════════════════════ */
+function toggleSidebar(){el('sidebar').classList.toggle('open');el('overlay').classList.toggle('show');}
+function closeSidebar(){el('sidebar').classList.remove('open');el('overlay').classList.remove('show');}
+
+/* ═══ RELATED CALCULATORS HELPER ════════════════════════════ */
+function getRelatedHTML(calcId){
+  const ids = (RELATED[calcId] || []).filter(id => calcMap[id]).slice(0, 6);
+  if(!ids.length) {
+    // Fallback: same category tools
+    const calc = calcMap[calcId];
+    if(!calc) return '';
+    const sameCat = CALCS.filter(c => c.cat === calc.cat && c.id !== calcId).slice(0, 4);
+    if(!sameCat.length) return '';
+    ids.push(...sameCat.map(c => c.id));
+  }
+  const cat = calcMap[calcId] ? CATS[calcMap[calcId].cat] : null;
+  const cards = ids.map(id => {
+    const c = calcMap[id];
+    if(!c) return '';
+    const cc = CATS[c.cat];
+    return `<button class="related-card" style="--rc:${cc.color}" onclick="goTo('${c.id}')" aria-label="Go to ${c.title}">
+      <span class="related-card-icon">${c.icon}</span>
+      <span class="related-card-info">
+        <span class="related-card-title">${c.title}</span>
+        <span class="related-card-cat">${cc.label}</span>
+      </span>
+    </button>`;
+  }).join('');
+  return `<section class="related-section" aria-labelledby="related-heading">
+    <h2 class="related-title" id="related-heading">🔗 Related Calculators</h2>
+    <div class="related-grid">${cards}</div>
+  </section>`;
+}
+
+/* ═══ HELPER FUNCTIONS ═══════════════════════════════════════ */
+function copyResultBtn(btn, id) {
+  const el2 = document.getElementById(id);
+  if (!el2) return;
+  navigator.clipboard.writeText(el2.innerText.replace('Copy','').trim()).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = orig, 1400);
+  }).catch(()=>{ btn.textContent = 'Failed'; setTimeout(()=>btn.textContent='Copy',1400); });
+}
+function copyShareLink(btn) {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+/* Per-instance pill toggle — avoids global state bugs */
+function setPillState(activeId, inactiveId) {
+  const a = document.getElementById(activeId), b = document.getElementById(inactiveId);
+  if(a) a.classList.add('active');
+  if(b) b.classList.remove('active');
+}
+
+/* ═══ LEGAL MODAL ═════════════════════════════════════════════ */
+const LEGAL={
+  about:{title:'🧮 About Calc Toolkit',body:`<p><strong>Calc Toolkit</strong> is a free, privacy-first collection of calculators for age, percentage, health, finance, unit conversion, and more.</p><p>All calculators run 100% in your browser — no data is ever sent to a server. No sign-up, no tracking, completely free.</p><h3 style="font-family:var(--ff-display);font-style:italic;margin:.8rem 0 .3rem">Contact</h3><p>Feedback? Email <a href="mailto:hello@calculatortoolkit.com" style="color:var(--accent)">hello@calculatortoolkit.com</a></p>`},
+  privacy:{title:'🔒 Privacy Policy',body:`<p>Calc Toolkit stores only your theme preference in localStorage. No personal data, no tracking, no third-party analytics. Google Fonts is loaded for typography — their privacy policy applies to that request.</p>`},
+  terms:{title:'📋 Terms of Use',body:`<p>Calc Toolkit is provided free for personal, educational, and professional reference. Results are for informational purposes only and should not replace professional advice for medical, financial, or legal decisions.</p><p>Currency rates are approximate offline references — not for financial transactions.</p>`}
+};
+function openLegal(type){
+  const d=LEGAL[type];if(!d)return;
+  el('legal-title').textContent=d.title;
+  el('legal-body').innerHTML=d.body;
+  const b=el('legal-backdrop');b.style.display='flex';
+  b.onclick=e=>{if(e.target===b)closeLegal();};
+}
+function closeLegal(){el('legal-backdrop').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLegal();});
+</script>
+</body>
+</html>
