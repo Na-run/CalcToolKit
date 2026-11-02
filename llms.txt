@@ -1,0 +1,16 @@
+# NegativeMark Calculator
+
+> A professional, high-precision negative marking calculator for competitive exams like NEET, JEE, UPSC, and SSC. It calculates net scores, accuracy, attempt rate, and estimates percentiles based on normal distribution.
+
+## Main Tools
+- [Negative Marking Calculator](https://yourdomain.com/): The primary tool for calculating exam scores with custom negative marking schemes.
+- [Guess Probability Engine](https://yourdomain.com/#strategy): A tool to calculate the expected value of guessing answers blindly (25% probability for 4 options).
+
+## Exam Specific Pages
+- [NEET Negative Marking Calculator](https://yourdomain.com/neet-negative-marking-calculator/): Pre-configured for NEET UG (+4/-1).
+- [JEE Main Negative Marking Calculator](https://yourdomain.com/jee-negative-marking-calculator/): Pre-configured for JEE Main (+4/-1).
+
+## Key Facts
+- **NEET UG Scheme**: Correct = +4, Incorrect = -1, Unattempted = 0.
+- **JEE Main Scheme**: Correct = +4, Incorrect = -1, Unattempted = 0.
+- **UPSC Prelims Scheme**: Correct = +2, Incorrect = -0.66, Unattempted = 0.

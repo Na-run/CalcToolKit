@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEET Negative Marking Calculator – Calculate NEET UG Score</title>
+  <meta name="description" content="Free NEET UG negative marking calculator. Enter correct, incorrect, and unattempted answers to calculate your NEET score with the official +4/−1 scheme." />
+  <link rel="canonical" href="https://yourdomain.com/neet-negative-marking-calculator/" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourdomain.com/" },
+      { "@type": "ListItem", "position": 2, "name": "NEET Negative Marking Calculator" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="header"><!-- same header with adjusted links --></header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>NEET Negative Marking Calculator</h1>
+        <p class="hero-subtitle">Calculate your NEET UG score using the official 2026 marking scheme: +4 for correct, −1 for incorrect, 0 for unattempted.</p>
+        <p class="hero-subtitle"><small>Source: NTA NEET UG 2026 information bulletin (verify with official NTA website).</small></p>
+      </div>
+    </section>
+
+    <section class="calculator-section">
+      <div class="container">
+        <!-- The same calculator card as homepage, but with preset preselected -->
+        <!-- You can duplicate the calculator markup here, or use JS to set preset on load -->
+        <div class="calculator-card">
+          <!-- Include the same inputs, with preset set to "neet" -->
+          <!-- For brevity, the full markup is identical to index.html, but with <select id="preset"><option value="neet" selected>... -->
+        </div>
+        <div id="resultsPanel" class="results-card" style="display:none;"><!-- same --></div>
+        <!-- What-If and Target sections can be included -->
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container content-narrow">
+        <h2>NEET UG 2026 Marking Scheme</h2>
+        <p>As per the National Testing Agency (NTA) for NEET UG 2026:</p>
+        <ul>
+          <li>Correct answer: <strong>+4 marks</strong></li>
+          <li>Incorrect answer: <strong>−1 mark</strong></li>
+          <li>Unattempted question: <strong>0 marks</strong></li>
+          <li>Total marks: <strong>720</strong></li>
+        </ul>
+        <p><small>Always confirm with the latest official NTA information bulletin before making decisions.</small></p>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><!-- same --></footer>
+  <script src="script.js"></script>
+  <script>
+    // On NEET page load, set the preset
+    document.addEventListener('DOMContentLoaded', () => {
+      const preset = document.getElementById('preset');
+      if (preset) {
+        preset.value = 'neet';
+        // Trigger change to populate values
+        preset.dispatchEvent(new Event('change'));
+      }
+    });
+  </script>
+</body>
+</html>
